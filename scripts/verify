@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# lufs-recorder-pwa — fail-closed artifact verifier.
+# "Exit 0 is not enough": prove the servable bytes are correct before they ship.
+# Aligned to agent-knowledge docs/infra/website-portability (Required verification).
+# Usage: scripts/verify [DIR]   (DIR defaults to repo root)
+set -euo pipefail
+
+DIR="${1:-.}"
+MARKER="lufs-recorder"
+MAX_BYTES=26214400   # 25 MiB (site.yaml runtime.max_asset_bytes)
+REQUIRED=(index.html 404.html manifest.webmanifest sw.js icons/icon.svg)
+
+fail=0
+pass(){ printf '  ok    %s\n' "$1"; }
+bad(){  printf '  FAIL  %s\n' "$1"; fail=$((fail+1)); }
+
+echo "verify: $DIR"
+
+# 1. required files exist and are non-empty
+for f in "${REQUIRED[@]}"; do
+  if [ -s "$DIR/$f" ]; then pass "exists non-empty: $f"; else bad "missing/empty: $f"; fi
+done
+
+# 2. HTML entry points parse (doctype + closing tag) and carry the content marker
+for f in index.html 404.html; do
+  if grep -qi '<!doctype html>' "$DIR/$f" && grep -qi '</html>' "$DIR/$f"; then pass "html well-formed: $f"; else bad "html not well-formed: $f"; fi
+done
+if grep -q "$MARKER" "$DIR/index.html"; then pass "content marker present: $MARKER"; else bad "content marker missing: $MARKER"; fi
+
+# 3. manifest is valid JSON with required keys, and start_url/scope are relative
+python3 - "$DIR/manifest.webmanifest" <<'PY' && pass "manifest valid + relative" || bad "manifest invalid"
+import json,sys
+m=json.load(open(sys.argv[1]))
+assert m.get("name"), "name"
+assert m.get("icons"), "icons"
+assert str(m.get("start_url","")).startswith("."), "start_url must be relative"
+assert str(m.get("scope","./")).startswith("."), "scope must be relative"
+PY
+
+# 4. service worker bumps a cache name (stale-logic guard)
+if grep -qE "const CACHE\s*=\s*'lufs-rec-v[0-9]" "$DIR/sw.js"; then pass "sw cache versioned"; else bad "sw.js missing versioned CACHE const"; fi
+
+# 5. zero external origins (matches site/external-origins.yaml). No network calls, no absolute-root asset refs.
+if grep -nE 'fetch\(|XMLHttpRequest|EventSource|(src|href)="https?:|url\(https?:' "$DIR/index.html" >/dev/null 2>&1; then
+  bad "unexpected external origin/network ref in index.html"; grep -nE 'fetch\(|XMLHttpRequest|EventSource|(src|href)="https?:|url\(https?:' "$DIR/index.html" | head -5
+else pass "zero external origins in index.html"; fi
+if grep -nE '(src|href)="/' "$DIR/index.html" >/dev/null 2>&1; then bad "absolute-root asset ref (breaks subpath hosting)"; else pass "all asset refs relative"; fi
+
+# 6. no secret-pattern material shipped
+if grep -rnE 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|(api_?key|secret|password)\s*[:=]\s*["'"'"'][^"'"'"']{8,}' "$DIR/index.html" "$DIR/sw.js" >/dev/null 2>&1; then
+  bad "possible secret material in shipped assets"; else pass "no secret patterns"; fi
+
+# 7. no asset exceeds the lowest host's per-file limit
+for f in "${REQUIRED[@]}"; do
+  sz=$(wc -c < "$DIR/$f" | tr -d ' ')
+  if [ "$sz" -le "$MAX_BYTES" ]; then pass "size ok ($sz b): $f"; else bad "over $MAX_BYTES b: $f"; fi
+done
+
+echo
+if [ "$fail" -eq 0 ]; then echo "VERIFY: PASS"; else echo "VERIFY: FAIL ($fail)"; fi
+[ "$fail" -eq 0 ]

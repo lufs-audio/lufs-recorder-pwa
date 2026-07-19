@@ -1,0 +1,47 @@
+# LUFS website-portability manifest (schema per agent-knowledge docs/infra/website-portability/01)
+# Target-independent source of truth. No secrets. Hosts are swappable adapters.
+schema_version: 1
+site_id: lufs-recorder-pwa
+canonical_url: https://danialrami.github.io/lufs-recorder-pwa/
+source:
+  repository: danialrami/lufs-recorder-pwa
+  production_ref: main
+build:
+  # Tier A — pure static. No build step; the source IS the servable site.
+  command: "none"
+  output_dir: dist        # scripts/package assembles the servable set here for release
+  toolchain:
+    node: "none"          # verify/package use python3 + coreutils only
+    package_manager: "none"
+  lockfiles: []
+runtime:
+  kind: static
+  index: index.html
+  error_document: 404.html
+  spa_fallback: false
+  max_asset_bytes: 26214400   # 25 MiB (lowest active host: Cloudflare Pages)
+# Servable set — the host-neutral bytes an HTTP server exposes.
+release:
+  include:
+    - index.html
+    - 404.html
+    - manifest.webmanifest
+    - sw.js
+    - icons/icon.svg
+  artifact_name: site.tar.gz
+  retain: 20
+routes:
+  required:
+    - /
+    - /index.html
+    - /404.html
+    - /manifest.webmanifest
+    - /sw.js
+    - /icons/icon.svg
+external_origins: []          # fully self-contained: zero external origins, zero network calls
+domains:
+  - danialrami.github.io
+verification:
+  content_probe: /index.html
+  content_marker: "lufs-recorder"
+  smoke_timeout_seconds: 10

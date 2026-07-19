@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# lufs-recorder-pwa — assemble the host-neutral release into dist/ with provenance.
+# Emits: dist/<servable files>, dist/SHA256SUMS, dist/artifact.json, dist/verification.json
+# Content identity uses SHA-256 (matches the catalog + Workchain convention).
+# Usage: scripts/package
+set -euo pipefail
+
+# Servable set — mirrors site.yaml release.include (Tier A: source IS the site).
+INCLUDE=(index.html 404.html manifest.webmanifest sw.js icons/icon.svg)
+OUT=dist
+SITE_ID=lufs-recorder-pwa
+
+rm -rf "$OUT"; mkdir -p "$OUT/icons"
+for f in "${INCLUDE[@]}"; do mkdir -p "$OUT/$(dirname "$f")"; cp "$f" "$OUT/$f"; done
+
+# Fail-closed verify against the assembled artifact; write the machine-readable report.
+if scripts/verify "$OUT" > "$OUT/.verify.log" 2>&1; then VSTATUS=passed; else VSTATUS=failed; fi
+python3 - "$OUT" "$VSTATUS" > "$OUT/verification.json" <<'PY'
+import json,sys
+out,status=sys.argv[1],sys.argv[2]
+print(json.dumps({"schema_version":1,"status":status,"log":".verify.log"},indent=2))
+PY
+
+# Digests for every servable file.
+( cd "$OUT" && find . -type f ! -name SHA256SUMS ! -name artifact.json ! -name verification.json ! -name .verify.log \
+    | sort | xargs sha256sum > SHA256SUMS )
+
+COMMIT="${GITHUB_SHA:-$(git rev-parse HEAD 2>/dev/null || echo unknown)}"
+python3 - "$OUT" "$SITE_ID" "$COMMIT" > "$OUT/artifact.json" <<'PY'
+import json,sys,os,hashlib,glob
+out,site_id,commit=sys.argv[1],sys.argv[2],sys.argv[3]
+files=[p for p in glob.glob(out+"/**",recursive=True) if os.path.isfile(p)
+       and os.path.basename(p) not in ("SHA256SUMS","artifact.json","verification.json",".verify.log")]
+total=sum(os.path.getsize(p) for p in files)
+# artifact digest = sha256 of the sorted SHA256SUMS (stable content identity)
+sums=open(os.path.join(out,"SHA256SUMS"),"rb").read()
+digest=hashlib.sha256(sums).hexdigest()
+print(json.dumps({
+  "schema_version":1,"site_id":site_id,
+  "source":{"repository":"danialrami/lufs-recorder-pwa","commit":commit},
+  "build":{"builder":os.environ.get("GITHUB_ACTIONS") and "github-actions" or "local","command":"none (Tier A static)"},
+  "artifact":{"sha256":digest,"files":len(files),"bytes":total},
+  "verification":{"report":"verification.json"}
+},indent=2))
+PY
+
+echo "packaged -> $OUT/ (verify: $VSTATUS)"
+cat "$OUT/artifact.json"
+[ "$VSTATUS" = passed ]

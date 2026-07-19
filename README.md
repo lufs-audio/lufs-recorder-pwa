@@ -10,12 +10,20 @@ It is the **sibling** of the native recorder, not a replacement. The native tool
 
 ## What it does
 
-- **Grant audio** → enumerates input devices. **Grant MIDI** → lists input ports.
-- Pick a device + port, name the take, hit **Record**.
+- **Record modes:** capture **audio + midi**, **audio only**, or **midi only** — a first-class toggle.
+- **Grant audio** → enumerates input devices. **Grant MIDI** → lists input ports. Pick, name the take, hit **Record**.
 - **Audio:** `getUserMedia` (all processing disabled) → **AudioWorklet** pulling raw `Float32` frames → lossless **24-bit PCM WAV** encoded by hand (no MediaRecorder compression).
 - **MIDI:** **Web MIDI API** — every message logged with timestamps, live monitor.
-- On stop it assembles a `take.json` (`captured` / `tracks` / `midi` / `verification`) and offers per-file downloads, plus **save-to-folder** via the File System Access API where supported.
+- **Playback + visualize:** each take renders a **waveform** you can play and **scrub**, and a **MIDI piano-roll** with a real in-browser **Web Audio synth** so you can *hear* the MIDI, playhead moving across both.
+- On stop it assembles a `take.json` (`captured` / `tracks` / `midi` incl. resolved `notes` / `verification`) and offers per-file downloads.
 - A **live capability panel** reports exactly what your browser allows, in real time.
+
+## Architecture — engine vs surface
+
+All capture, verification, DSP, MIDI note-resolution, and synth playback live in `window.LUFSRec`
+(in `index.html`). The DOM/CSS is a **throwaway reference UI**; the production design binds to the
+engine's data + transport contract in [`docs/SURFACE-CONTRACT.md`](docs/SURFACE-CONTRACT.md) and never
+forks engine logic. Pure helpers (note resolution, peaks, verification, LUFS) are node-unit-tested.
 
 ## Verification is honest
 
@@ -39,13 +47,32 @@ Plus a real **BS.1770 integrated LUFS** (two-stage K-weighting + absolute/relati
 
 Served over **https** (or `localhost`), this is an installable PWA — manifest + service worker + offline app shell. In Chromium desktop use the install icon in the address bar; on Android Chrome use **Add to Home screen**. Once installed it launches standalone and runs offline.
 
+## Verify locally
+
+Practice what the product preaches — the site ships a fail-closed verifier (per the LUFS
+website-portability contract):
+
+```
+bash scripts/verify      # "exit 0 is not enough": proves the servable bytes are correct
+bash scripts/package     # assembles dist/ + SHA256SUMS + artifact.json + verification.json
+bash scripts/smoke URL   # checks a deployed URL serves the right artifact
+```
+
 ## Host it yourself
 
 It's static — host it anywhere that serves over https:
 
-**GitHub Pages (simplest):** Settings → Pages → Build and deployment → **Deploy from a branch** → `main` / `/ (root)`. It'll be live at `https://danialrami.github.io/lufs-recorder-pwa/`. No build step, no workflow.
+**Preferred (verified):** activate `ci/deploy.yml` (a human/local agent runs
+`git mv ci/deploy.yml .github/workflows/deploy.yml`), then GitHub Pages → **Deploy from a branch** →
+`deploy` / root. On every push to `main`, CI runs verify → package → retain → publishes the verified
+output to the `deploy` branch. A red verify never ships.
 
-Any static host works too (Cloudflare Pages, Hostinger, Netlify, an S3/R2 bucket behind https) — just serve the repo root.
+**Quickest:** Pages → **Deploy from a branch** → `main` / `/ (root)`. Live at
+`https://danialrami.github.io/lufs-recorder-pwa/`, no build step — but the verify gate doesn't block
+this path, so prefer the `deploy` branch for anything real.
+
+Any static host works (Cloudflare Pages, Hostinger, Netlify, an S3/R2 bucket behind https) — serve the
+`deploy` branch (or the repo root). See the `hosting-provider-static-deploy` skill.
 
 ## Browser support — the real constraints
 

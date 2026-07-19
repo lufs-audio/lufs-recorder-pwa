@@ -1,0 +1,4 @@
+# The recorder makes ZERO network calls and depends on ZERO external origins.
+# All capture, verification, encoding, and MIDI synthesis run in-browser.
+# This emptiness is a portability strength and is asserted by scripts/verify.
+external_origins: []
