@@ -1,0 +1,17 @@
+{
+  "name": "lufs-recorder · browser",
+  "short_name": "lufs-rec",
+  "description": "Zero-install, agent-first audio + MIDI capture in the browser. Verifies takes honestly and exports a take.json that shares the native lufs-recorder schema.",
+  "id": "/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "categories": ["music", "productivity", "utilities"],
+  "icons": [
+    { "src": "./icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
