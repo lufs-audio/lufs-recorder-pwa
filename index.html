@@ -25,10 +25,10 @@
   a{color:var(--teal)}
   h1{font-family:var(--mono);font-weight:700;font-size:clamp(20px,4.5vw,28px);letter-spacing:-.02em;margin:0}
   h1 .dot{color:var(--teal)}
-  .sub{color:var(--mut);font-size:13px;margin:.35rem 0 0;max-width:60ch}
-  header{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:20px}
+  .sub{color:var(--mut);font-size:13px;margin:.35rem 0 0;max-width:66ch}
+  header{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:16px}
   .grid{display:grid;gap:16px;grid-template-columns:1fr}
-  @media(min-width:820px){.grid{grid-template-columns:340px 1fr}}
+  @media(min-width:860px){.grid{grid-template-columns:340px 1fr}}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
   .card h2{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:0 0 12px}
   label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
@@ -41,18 +41,19 @@
   button:hover:not(:disabled){border-color:var(--teal)}
   button:disabled{opacity:.4;cursor:not-allowed}
   button.primary{background:var(--teal);color:#06201f;border-color:var(--teal);font-weight:700}
-  button.rec{background:var(--red);color:#fff;border-color:var(--red)}
-  button.ghost{background:transparent}
-  .rec-wrap{display:flex;align-items:center;gap:16px;margin-top:6px}
+  /* mode switch */
+  .modeswitch{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .modeswitch button{border:0;border-radius:0;background:var(--panel2);padding:8px 14px}
+  .modeswitch button[aria-pressed="true"]{background:var(--teal);color:#06201f;font-weight:700}
+  .rec-wrap{display:flex;align-items:center;gap:16px;margin-top:10px}
   .dial{width:88px;height:88px;border-radius:50%;border:3px solid var(--line);display:grid;place-items:center;
-    font-family:var(--mono);font-size:15px;color:var(--mut);flex:0 0 auto;transition:.2s;position:relative}
+    font-family:var(--mono);font-size:15px;color:var(--mut);flex:0 0 auto;transition:.2s}
   .dial.armed{border-color:var(--teal);color:var(--teal)}
   .dial.live{border-color:var(--red);color:var(--red);animation:pulse 1.4s infinite}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(211,82,51,.5)}50%{box-shadow:0 0 0 10px rgba(211,82,51,0)}}
-  .meters{display:flex;gap:6px;align-items:flex-end;height:56px;margin-top:10px}
+  .meters{display:flex;gap:6px;align-items:flex-end;height:52px;margin-top:10px}
   .meter{flex:1;background:var(--panel2);border-radius:4px;position:relative;overflow:hidden;height:100%}
   .meter i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(0deg,var(--teal),var(--gold) 78%,var(--red));height:0%}
-  .meter span{position:absolute;top:4px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:9px;color:var(--mut)}
   .midimon{font-family:var(--mono);font-size:11px;color:var(--dusty);height:18px;overflow:hidden;white-space:nowrap;margin-top:8px}
   .stat{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;padding:4px 0;border-bottom:1px dashed var(--line)}
   .stat b{color:var(--cream);font-weight:400}
@@ -60,25 +61,35 @@
   .caps .k{color:var(--mut)}
   .pill{font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:20px;border:1px solid currentColor}
   .yes{color:var(--ok)} .no{color:var(--bad)} .part{color:var(--warn)}
-  .takes{display:flex;flex-direction:column;gap:10px}
+  .takes{display:flex;flex-direction:column;gap:12px}
   .take{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px}
-  .take .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .take .top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
   .take .name{font-family:var(--mono);font-size:13px}
+  .modetag{font-family:var(--mono);font-size:9px;color:var(--dusty);border:1px solid var(--line);border-radius:10px;padding:1px 7px;text-transform:uppercase;letter-spacing:.08em}
   .badge{font-family:var(--mono);font-size:10px;padding:2px 9px;border-radius:20px;font-weight:700}
   .badge.v{background:rgba(120,190,186,.15);color:var(--teal);border:1px solid var(--teal)}
   .badge.f{background:rgba(211,82,51,.15);color:var(--red);border:1px solid var(--red)}
   .checks{margin-top:10px;display:flex;flex-direction:column;gap:3px}
   .chk{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px}
   .chk .ic{width:14px;text-align:center}
-  .chk .nm{min-width:150px}
-  .chk .dt{color:var(--mut);flex:1}
+  .chk .nm{min-width:140px}
+  .chk .dt{color:var(--mut);flex:1;min-width:120px}
   .chk .tag{font-size:9px;color:var(--mut);border:1px solid var(--line);border-radius:10px;padding:0 6px}
+  /* visual: waveform + piano roll */
+  .viz{margin-top:12px;border:1px solid var(--line);border-radius:8px;background:var(--ground);position:relative;overflow:hidden}
+  .viz canvas{display:block;width:100%;height:100%}
+  .waveform{height:96px}
+  .pianoroll{height:160px}
+  .playhead{position:absolute;top:0;bottom:0;width:1px;background:var(--red);left:0;pointer-events:none}
+  .transport{display:flex;align-items:center;gap:10px;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--mut)}
+  .transport input[type=range]{flex:1;accent-color:var(--teal)}
   .take .dl{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
   .take .dl button{font-size:11px;padding:6px 10px}
   .note{color:var(--mut);font-size:11.5px;margin-top:10px;line-height:1.5}
   .banner{background:rgba(217,162,61,.1);border:1px solid var(--gold);color:var(--gold);
     border-radius:10px;padding:10px 12px;font-size:12.5px;font-family:var(--mono);margin-bottom:16px;display:none}
   .banner.show{display:block}
+  .devnote{background:rgba(120,190,186,.07);border:1px dashed var(--line);border-radius:8px;padding:8px 10px;font-size:11px;font-family:var(--mono);color:var(--mut);margin-top:12px}
   code{font-family:var(--mono);background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:.9em}
   footer{margin-top:28px;color:var(--mut);font-size:11px;font-family:var(--mono);border-top:1px solid var(--line);padding-top:14px}
 </style>
@@ -86,25 +97,36 @@
 <body>
 <header>
   <h1>lufs-recorder <span class="dot">·</span> browser</h1>
-  <p class="sub">A zero-install capture primitive. Records audio + MIDI in the browser sandbox, verifies the take honestly, and exports a <code>take.json</code> that shares the native recorder's schema. Throwaway UI, real logic.</p>
+  <p class="sub">A zero-install capture primitive. Records audio + MIDI in the browser sandbox, verifies the take honestly, and exports a <code>take.json</code> that shares the native recorder's schema.</p>
 </header>
+
+<div class="devnote">
+  <b>Reference UI — the engine is the deliverable.</b> This throwaway front-end exists only to exercise the capture/verify/playback engine
+  (<code>window.LUFSRec</code>) and its data + transport contract. The production surface is a separate design pass (see <code>docs/SURFACE-CONTRACT.md</code>).
+</div>
 
 <div id="banner" class="banner"></div>
 
 <div class="grid">
   <!-- LEFT: controls -->
-  <div style="display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;flex-direction:column;gap:16px;margin-top:16px">
     <div class="card">
-      <h2>Devices</h2>
+      <h2>Capture</h2>
+      <label>Mode</label>
+      <div class="modeswitch" id="modeswitch">
+        <button data-mode="both" aria-pressed="true">audio + midi</button>
+        <button data-mode="audio" aria-pressed="false">audio</button>
+        <button data-mode="midi" aria-pressed="false">midi</button>
+      </div>
       <label>Audio input</label>
-      <select id="audioDev"><option>— grant mic to list —</option></select>
+      <select id="audioDev"><option>— grant audio to list —</option></select>
       <label>MIDI input</label>
       <select id="midiDev"><option>— grant MIDI to list —</option></select>
       <label>Take name</label>
       <input id="takeName" type="text" value="take" spellcheck="false"/>
       <div class="row" style="margin-top:12px">
-        <button id="grantAudio" class="ghost">Grant audio</button>
-        <button id="grantMidi" class="ghost">Grant MIDI</button>
+        <button id="grantAudio">Grant audio</button>
+        <button id="grantMidi">Grant MIDI</button>
       </div>
     </div>
 
@@ -116,7 +138,7 @@
   </div>
 
   <!-- RIGHT: record + takes -->
-  <div style="display:flex;flex-direction:column;gap:16px">
+  <div style="display:flex;flex-direction:column;gap:16px;margin-top:16px">
     <div class="card">
       <h2>Record</h2>
       <div class="rec-wrap">
@@ -127,10 +149,11 @@
             <button id="stopBtn" disabled>■ Stop</button>
           </div>
           <div class="meters" id="meters"></div>
-          <div class="midimon" id="midimon">midi idle</div>
+          <div class="midimon" id="midimon">idle</div>
         </div>
       </div>
       <div style="margin-top:14px">
+        <div class="stat"><span>mode</span><b id="sMode">audio + midi</b></div>
         <div class="stat"><span>context sample rate</span><b id="sSr">—</b></div>
         <div class="stat"><span>audio frames</span><b id="sFrames">—</b></div>
         <div class="stat"><span>midi events</span><b id="sMidi">—</b></div>
@@ -140,412 +163,620 @@
 
     <div class="card">
       <h2>Takes</h2>
-      <div class="takes" id="takes"><p class="note">No takes yet. Grant devices, then record.</p></div>
+      <div class="takes" id="takes"><p class="note">No takes yet. Choose a mode, grant devices, then record.</p></div>
     </div>
   </div>
 </div>
 
 <footer>
   lufs. · browser capture adapter · shares <code>take.json</code> + verification contract with the native lufs-recorder.
-  Verification is honest: browser-uncapturable checks (driver xruns, physical channel mapping) are marked <b>inferred / non-gating</b>, never faked.
+  Verification is honest: browser-uncapturable checks (driver xruns, physical channel mapping) are reported as <b>inferred / non-gating</b>, never faked.
 </footer>
 
 <script>
-/* ============================================================
-   lufs-recorder (browser) — capture adapter
-   Rock-solid logic; throwaway UI.
-   ============================================================ */
-const $ = s => document.querySelector(s);
-const fmt = (n,d=2)=> (n===null||n===undefined||Number.isNaN(n))?'—':Number(n).toFixed(d);
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+/* ============================================================================
+   lufs-recorder (browser) — ENGINE
+   ----------------------------------------------------------------------------
+   window.LUFSRec is the whole product. The DOM below is a throwaway reference
+   UI. The production surface (a separate design pass) binds to this contract
+   and never touches capture, DSP, MIDI parsing, or synthesis.
 
-const state = {
-  ctx:null, worklet:null, source:null, muteGain:null, stream:null,
-  midiAccess:null, midiInput:null,
-  recording:false, startPerf:0, startCtxTime:0,
-  chanBufs:[], chanCount:2, recvFrames:0, sampleRate:48000,
-  peak:[], midiEvents:[], firstMidiPerf:null, timer:null, meterRAF:null, analyserData:null
-};
+   DATA CONTRACT (per take):
+     take.mode                      'audio' | 'midi' | 'both'
+     take.name, take.created, take.schema
+     take.captured { channels, rate, bit_depth, frames, duration_s,
+                     xruns:null, xruns_inferred, av_offset_ms, midi_events }
+     take.tracks[]  { file, channel, peak_dbfs, integrated_lufs }   | null (midi-only)
+     take.midi      { file, events, note_ons, note_offs, notes[] }  | null (audio-only)
+        notes[] = { pitch, start_ms, dur_ms, velocity, channel }    (resolved pairs)
+     take.verification { verified, checks[] }
+        checks[] = { name, ok, gating, detail, mode }  (gating=true counts toward verified)
 
-/* ---------- capability detection ---------- */
-function detectCaps(){
-  const secure = window.isSecureContext;
-  const midi = 'requestMIDIAccess' in navigator;
-  const gum = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-  const awl = !!(window.AudioContext||window.webkitAudioContext) && !!(window.AudioWorkletNode);
-  const fsa = 'showDirectoryPicker' in window;
-  const iframed = window.self !== window.top;
-  const ua = navigator.userAgent;
-  const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-  const rows = [
-    ['secure context', secure, secure?'yes':'no'],
-    ['Web MIDI API', midi, midi?'yes':(iOS?'no · iOS':'no')],
-    ['getUserMedia', gum, gum?'yes':'no'],
-    ['AudioWorklet', awl, awl?'yes':'no'],
-    ['File System Access', fsa, fsa?'yes':'part'],
-    ['embedded iframe', !iframed, iframed?'part':'no'],
-  ];
-  const el = $('#caps'); el.innerHTML='';
-  rows.forEach(([k,ok,txt])=>{
-    const cls = txt==='yes'?'yes':(txt.startsWith('no')?'no':'part');
-    el.insertAdjacentHTML('beforeend',
-      `<span class="k">${k}</span><span class="pill ${cls}">${txt}</span>`);
-  });
-  // banner + note
-  const notes=[];
-  if(!secure) notes.push('Not a secure context — device access is blocked. Open over https or localhost.');
-  if(iframed) notes.push('Running inside an embedded iframe: the parent must allow `microphone; midi`, or mic/MIDI will be blocked. Open this page in its own tab.');
-  if(!midi) notes.push('No Web MIDI here (Safari / iOS). Audio-only capture still works.');
-  if(iOS) notes.push('iOS: no Web MIDI, and audio device selection is limited to the default input.');
-  $('#capsNote').textContent = notes.join(' ');
-  const b=$('#banner');
-  if(iframed || !secure){ b.classList.add('show'); b.innerHTML = (!secure?'⚠ insecure context — capture disabled. ':'') + (iframed?'⚠ embedded preview may block mic/MIDI — <b>open in a new tab</b> for full access.':''); }
-  return {secure,midi,gum,awl,fsa,iframed,iOS};
-}
-const CAPS = detectCaps();
+   RENDER AIDS (runtime only, not serialized into take.json):
+     take.audio  { objectUrl, peaks:{min[],max[],buckets}, sampleRate, duration_s } | null
+     take.transport   unified transport (audio+midi synced when both present)
+     take.audioTransport / take.midiTransport   individual transports
 
-/* ---------- AudioWorklet processor (blob module) ---------- */
-const workletSrc = `
-class CaptureProcessor extends AudioWorkletProcessor {
-  constructor(){ super(); this.on=false;
-    this.port.onmessage=(e)=>{ if(e.data==='start') this.on=true; else if(e.data==='stop') this.on=false; }; }
-  process(inputs){
-    const input = inputs[0];
-    if(this.on && input && input.length){
-      const n = input[0].length; const chans=[];
-      for(let c=0;c<input.length;c++){ const a=new Float32Array(n); a.set(input[c]); chans.push(a); }
-      this.port.postMessage({chans, n}, chans.map(a=>a.buffer));
-    }
-    return true;
+   TRANSPORT INTERFACE (bind a playhead / controls to any of these):
+     play(fromSec?) · pause() · seek(sec) · currentTime (getter) ·
+     duration (getter) · playing (getter) · on(evt, cb) -> off()
+       events: 'play' | 'pause' | 'time'(sec) | 'ended'
+   ========================================================================== */
+window.LUFSRec = (function(){
+  'use strict';
+  const SCHEMA = 'lufs-recorder/take@0.2-browser';
+  const PEAK_BUCKETS = 1400;
+
+  /* ---------- capability detection ---------- */
+  function detectCaps(){
+    const ua = navigator.userAgent;
+    const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+    return {
+      secure: window.isSecureContext,
+      midi: 'requestMIDIAccess' in navigator,
+      gum: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+      worklet: !!((window.AudioContext||window.webkitAudioContext) && window.AudioWorkletNode),
+      fsa: 'showDirectoryPicker' in window,
+      iframed: window.self !== window.top,
+      iOS
+    };
   }
-}
-registerProcessor('capture-processor', CaptureProcessor);
-`;
+  const caps = detectCaps();
 
-/* ---------- device enumeration ---------- */
-async function refreshAudioDevices(){
-  try{
-    const devs = await navigator.mediaDevices.enumerateDevices();
-    const ins = devs.filter(d=>d.kind==='audioinput');
-    const sel=$('#audioDev'); sel.innerHTML='';
-    if(!ins.length){ sel.innerHTML='<option>— none —</option>'; return; }
-    ins.forEach((d,i)=> sel.insertAdjacentHTML('beforeend',
-      `<option value="${d.deviceId}">${d.label||('input '+(i+1))}</option>`));
-  }catch(e){ console.warn(e); }
-}
+  /* ---------- pure helpers (unit-tested in node) ---------- */
+  function midiToFreq(p){ return 440 * Math.pow(2, (p-69)/12); }
 
-$('#grantAudio').onclick = async ()=>{
-  if(!CAPS.gum){ alert('getUserMedia unavailable'); return; }
-  try{
-    const s = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
-    s.getTracks().forEach(t=>t.stop()); // just priming permission for labels
-    await refreshAudioDevices();
-    maybeEnableRecord();
-  }catch(e){ alert('Audio permission denied or unavailable: '+e.message); }
-};
-
-$('#grantMidi').onclick = async ()=>{
-  if(!CAPS.midi){ alert('Web MIDI not supported in this browser (Safari/iOS have none).'); return; }
-  try{
-    state.midiAccess = await navigator.requestMIDIAccess({sysex:false});
-    const sel=$('#midiDev'); sel.innerHTML='';
-    const inputs=[...state.midiAccess.inputs.values()];
-    if(!inputs.length){ sel.innerHTML='<option>— no MIDI inputs —</option>'; }
-    else inputs.forEach(inp=> sel.insertAdjacentHTML('beforeend',`<option value="${inp.id}">${inp.name}</option>`));
-    state.midiAccess.onstatechange=()=>$('#grantMidi').click();
-  }catch(e){ alert('MIDI permission denied: '+e.message); }
-};
-
-function maybeEnableRecord(){
-  const ready = CAPS.gum && CAPS.awl && CAPS.secure && $('#audioDev').value && !$('#audioDev').value.startsWith('—');
-  $('#recBtn').disabled = !ready || state.recording;
-  $('#dial').classList.toggle('armed', ready && !state.recording);
-}
-$('#audioDev').onchange = maybeEnableRecord;
-
-/* ---------- meters ---------- */
-function buildMeters(n){
-  const m=$('#meters'); m.innerHTML='';
-  for(let i=0;i<n;i++) m.insertAdjacentHTML('beforeend',`<div class="meter"><i></i><span>${i+1}</span></div>`);
-}
-
-/* ---------- recording ---------- */
-async function startRec(){
-  const deviceId = $('#audioDev').value;
-  state.ctx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:48000});
-  await state.ctx.resume();
-  await state.ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([workletSrc],{type:'application/javascript'})));
-
-  state.stream = await navigator.mediaDevices.getUserMedia({audio:{
-    deviceId: deviceId?{exact:deviceId}:undefined,
-    echoCancellation:false, noiseSuppression:false, autoGainControl:false,
-    channelCount:2
-  }});
-  state.source = state.ctx.createMediaStreamSource(state.stream);
-  const settings = state.stream.getAudioTracks()[0].getSettings();
-  state.chanCount = settings.channelCount || state.source.channelCount || 2;
-  state.sampleRate = state.ctx.sampleRate;
-
-  state.worklet = new AudioWorkletNode(state.ctx,'capture-processor',{channelCount:state.chanCount,channelCountMode:'explicit'});
-  state.muteGain = state.ctx.createGain(); state.muteGain.gain.value=0;
-  state.source.connect(state.worklet); state.worklet.connect(state.muteGain); state.muteGain.connect(state.ctx.destination);
-
-  // live metering via analyser (visual only)
-  const analyser = state.ctx.createAnalyser(); analyser.fftSize=1024;
-  state.source.connect(analyser);
-  state.analyser = analyser; state.analyserData = new Float32Array(analyser.fftSize);
-
-  state.chanBufs = Array.from({length:state.chanCount},()=>[]);
-  state.peak = new Array(state.chanCount).fill(0);
-  state.recvFrames = 0; state.midiEvents=[]; state.firstMidiPerf=null;
-
-  state.worklet.port.onmessage = (e)=>{
-    const {chans,n} = e.data;
-    state.recvFrames += n;
-    for(let c=0;c<chans.length && c<state.chanCount;c++){
-      state.chanBufs[c].push(chans[c]);
-      // peak
-      const a=chans[c]; let p=state.peak[c];
-      for(let i=0;i<a.length;i++){ const v=Math.abs(a[i]); if(v>p)p=v; }
-      state.peak[c]=p;
+  // Resolve raw MIDI messages into note objects. note-on(vel0) counts as note-off.
+  function resolveMidiNotes(events, endMs){
+    const open = new Map();           // key "ch:pitch" -> {start,velocity}
+    const notes = [];
+    for(const e of events){
+      const d = e.d, st = d[0]&0xf0, ch = d[0]&0x0f, pitch = d[1], vel = d[2]||0;
+      const key = ch+':'+pitch;
+      if(st===0x90 && vel>0){
+        if(open.has(key)){ const o=open.get(key); notes.push({pitch,start_ms:+o.start.toFixed(2),dur_ms:+(e.t-o.start).toFixed(2),velocity:o.velocity,channel:ch}); }
+        open.set(key,{start:e.t,velocity:vel});
+      } else if(st===0x80 || (st===0x90 && vel===0)){
+        if(open.has(key)){ const o=open.get(key); notes.push({pitch,start_ms:+o.start.toFixed(2),dur_ms:+(e.t-o.start).toFixed(2),velocity:o.velocity,channel:ch}); open.delete(key); }
+      }
     }
-  };
-
-  // MIDI
-  if(state.midiAccess && $('#midiDev').value){
-    state.midiInput = [...state.midiAccess.inputs.values()].find(i=>i.id===$('#midiDev').value)||null;
-    if(state.midiInput){
-      state.midiInput.onmidimessage = (m)=>{
-        if(!state.recording) return;
-        if(state.firstMidiPerf===null) state.firstMidiPerf = m.timeStamp;
-        state.midiEvents.push({t:+(m.timeStamp - state.startPerf).toFixed(3), d:Array.from(m.data)});
-        const st=m.data[0]&0xf0;
-        $('#midimon').textContent = `${st===0x90?'▸ note-on ':st===0x80?'▹ note-off':'· '+st.toString(16)} ${m.data[1]??''} v${m.data[2]??''}`;
-      };
-    }
+    // close notes still held at stop
+    for(const [key,o] of open){ const [ch,pitch]=key.split(':').map(Number);
+      notes.push({pitch,start_ms:+o.start.toFixed(2),dur_ms:+(Math.max(0,endMs-o.start)).toFixed(2),velocity:o.velocity,channel:ch}); }
+    notes.sort((a,b)=>a.start_ms-b.start_ms || a.pitch-b.pitch);
+    return notes;
   }
 
-  buildMeters(state.chanCount);
-  state.recording=true; state.startPerf=performance.now(); state.startCtxTime=state.ctx.currentTime;
-  state.worklet.port.postMessage('start');
-  $('#recBtn').disabled=true; $('#stopBtn').disabled=false;
-  $('#dial').classList.remove('armed'); $('#dial').classList.add('live');
-  $('#sSr').textContent = state.sampleRate+' Hz';
-  tickTimer(); meterLoop();
-}
+  // Downsample channel buffers to {min[],max[]} amplitude buckets (mono mixdown).
+  function computePeaks(chans, buckets){
+    const frames = chans[0] ? chans[0].length : 0;
+    const n = Math.max(1, Math.min(buckets, frames||1));
+    const min = new Float32Array(n), max = new Float32Array(n);
+    if(!frames){ return {min:Array.from(min), max:Array.from(max), buckets:n}; }
+    const nch = chans.length, step = frames/n;
+    for(let b=0;b<n;b++){
+      const s0=Math.floor(b*step), s1=Math.min(frames, Math.floor((b+1)*step));
+      let mn=1, mx=-1;
+      for(let i=s0;i<s1;i++){
+        let v=0; for(let c=0;c<nch;c++) v+=chans[c][i]; v/=nch;
+        if(v<mn)mn=v; if(v>mx)mx=v;
+      }
+      if(s1<=s0){ mn=0; mx=0; }
+      min[b]=mn; max[b]=mx;
+    }
+    return {min:Array.from(min), max:Array.from(max), buckets:n};
+  }
 
-function tickTimer(){
-  state.timer=setInterval(()=>{
-    const s=(performance.now()-state.startPerf)/1000;
-    const mm=String(Math.floor(s/60)).padStart(2,'0'), ss=String(Math.floor(s%60)).padStart(2,'0');
-    $('#dial').textContent=`${mm}:${ss}`;
-    $('#sFrames').textContent = state.recvFrames.toLocaleString();
-    $('#sMidi').textContent = state.midiEvents.length;
-    const expected = s*state.sampleRate;
-    const drop = Math.max(0, Math.round((expected-state.recvFrames)/128));
-    $('#sDrop').textContent = drop;
-  },250);
-}
-function meterLoop(){
-  const step=()=>{
-    if(!state.recording) return;
-    state.analyser.getFloatTimeDomainData(state.analyserData);
-    let peak=0; for(const v of state.analyserData){const a=Math.abs(v); if(a>peak)peak=a;}
-    const db = peak>0?20*Math.log10(peak):-100;
-    const pct = clamp((db+60)/60*100,0,100);
-    document.querySelectorAll('#meters .meter i').forEach(el=> el.style.height=pct+'%');
-    state.meterRAF=requestAnimationFrame(step);
-  };
-  step();
-}
+  // Mode-aware verification. gating checks must all pass for verified=true;
+  // the absent half of a single-mode take is simply not asserted.
+  function buildChecks(mode, f){
+    const c=[]; const add=(name,ok,gating,detail,m)=>c.push({name,ok:!!ok,gating,detail,mode:m});
+    const hasAudio = mode!=='midi', hasMidi = mode!=='audio';
+    if(hasAudio){
+      add('audio_present', f.frames>0, true, `${(f.frames||0).toLocaleString()} frames · ${(f.duration||0).toFixed(2)}s`, 'authoritative');
+      add('sample_rate', f.rate===48000, true, `${f.rate} Hz`, 'authoritative');
+      add('bit_depth_export', true, true, '24-bit PCM WAV', 'authoritative');
+      add('integrated_lufs', f.lufs && f.lufs.value!==null, false, (f.lufs&&f.lufs.value!==null)?`${f.lufs.value} LUFS (BS.1770, gated)`:'silent / too short', (f.lufs&&f.lufs.exact)?'authoritative':'inferred');
+      add('true_peak', isFinite(f.peakDb&&f.peakDb[0]), false, (f.peakDb||[]).map((d,i)=>`ch${i+1} ${isFinite(d)?d+' dBFS':'-inf'}`).join(' · ')||'—', 'authoritative (sample peak)');
+      add('xruns', true, false, `${f.inferredDrop||0} inferred dropout(s) — driver xruns not observable in-browser`, 'inferred · non-gating');
+      add('channel_mapping', true, false, `${f.chanCount||0} ch as delivered — physical channel identity not verifiable in-browser`, 'inferred · non-gating');
+    }
+    if(hasMidi){
+      add('midi_present', f.events>0, true, `${f.events||0} messages · ${f.notes||0} notes`, 'authoritative');
+      add('midi_note_balance', f.noteOns===f.noteOffs, true, `${f.noteOns||0} on / ${f.noteOffs||0} off`, 'authoritative');
+    }
+    if(mode==='both' && f.avOffset!==null && f.avOffset!==undefined)
+      add('av_offset', Math.abs(f.avOffset)<500, false, `${f.avOffset} ms (first MIDI vs audio start)`, 'measured');
+    const verified = c.filter(x=>x.gating).every(x=>x.ok);
+    return {verified, checks:c};
+  }
 
-async function stopRec(){
-  if(!state.recording) return;
-  state.recording=false;
-  state.worklet.port.postMessage('stop');
-  clearInterval(state.timer); cancelAnimationFrame(state.meterRAF);
-  $('#stopBtn').disabled=true; $('#dial').classList.remove('live');
-  $('#midimon').textContent='midi idle';
-  const durPerf = (performance.now()-state.startPerf)/1000;
-
-  // flatten channel buffers
-  const chans = state.chanBufs.map(chunks=>{
-    let len=0; for(const c of chunks) len+=c.length;
-    const out=new Float32Array(len); let o=0;
-    for(const c of chunks){ out.set(c,o); o+=c.length; }
-    return out;
-  });
-  const frames = chans[0]?chans[0].length:0;
-  const duration = frames/state.sampleRate;
-
-  // teardown audio graph
-  try{ state.stream.getTracks().forEach(t=>t.stop()); }catch(e){}
-  try{ await state.ctx.close(); }catch(e){}
-
-  const take = buildTake(chans, frames, duration, durPerf);
-  renderTake(take, chans);
-  maybeEnableRecord();
-}
-
-$('#recBtn').onclick = ()=> startRec().catch(e=>{alert('Could not start: '+e.message); console.error(e);});
-$('#stopBtn').onclick = ()=> stopRec();
-
-/* ---------- WAV encoding (PCM24) ---------- */
-function encodeWAV(chans, sampleRate, bitDepth=24){
-  const numCh=chans.length, frames=chans[0]?chans[0].length:0;
-  const bytesPerSample=bitDepth/8, blockAlign=numCh*bytesPerSample;
-  const dataLen=frames*blockAlign;
-  const buf=new ArrayBuffer(44+dataLen), dv=new DataView(buf);
-  const ws=(o,s)=>{for(let i=0;i<s.length;i++)dv.setUint8(o+i,s.charCodeAt(i));};
-  ws(0,'RIFF'); dv.setUint32(4,36+dataLen,true); ws(8,'WAVE'); ws(12,'fmt ');
-  dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,numCh,true);
-  dv.setUint32(24,sampleRate,true); dv.setUint32(28,sampleRate*blockAlign,true);
-  dv.setUint16(32,blockAlign,true); dv.setUint16(34,bitDepth,true); ws(36,'data'); dv.setUint32(40,dataLen,true);
-  let off=44;
-  for(let i=0;i<frames;i++){
-    for(let c=0;c<numCh;c++){
+  /* ---------- WAV encoding (PCM24) ---------- */
+  function encodeWAV(chans, sampleRate, bitDepth){
+    bitDepth = bitDepth||24;
+    const numCh=chans.length, frames=chans[0]?chans[0].length:0;
+    const bps=bitDepth/8, blockAlign=numCh*bps, dataLen=frames*blockAlign;
+    const buf=new ArrayBuffer(44+dataLen), dv=new DataView(buf);
+    const ws=(o,s)=>{for(let i=0;i<s.length;i++)dv.setUint8(o+i,s.charCodeAt(i));};
+    ws(0,'RIFF'); dv.setUint32(4,36+dataLen,true); ws(8,'WAVE'); ws(12,'fmt ');
+    dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,numCh,true);
+    dv.setUint32(24,sampleRate,true); dv.setUint32(28,sampleRate*blockAlign,true);
+    dv.setUint16(32,blockAlign,true); dv.setUint16(34,bitDepth,true); ws(36,'data'); dv.setUint32(40,dataLen,true);
+    let off=44;
+    for(let i=0;i<frames;i++) for(let c=0;c<numCh;c++){
       let s=Math.max(-1,Math.min(1,chans[c][i]));
       if(bitDepth===24){ const v=Math.round(s*8388607); dv.setUint8(off,v&0xff); dv.setUint8(off+1,(v>>8)&0xff); dv.setUint8(off+2,(v>>16)&0xff); off+=3; }
       else { dv.setInt16(off, s<0?s*0x8000:s*0x7fff, true); off+=2; }
     }
+    return new Blob([buf],{type:'audio/wav'});
   }
-  return new Blob([buf],{type:'audio/wav'});
-}
 
-/* ---------- BS.1770 integrated loudness (K-weighting, 48k) ---------- */
-function biquad(x, b0,b1,b2, a1,a2){
-  const y=new Float32Array(x.length); let x1=0,x2=0,y1=0,y2=0;
-  for(let i=0;i<x.length;i++){ const xn=x[i];
-    const yn=b0*xn+b1*x1+b2*x2-a1*y1-a2*y2;
-    x2=x1; x1=xn; y2=y1; y1=yn; y[i]=yn; }
-  return y;
-}
-function kWeight(x){
-  // stage 1: high-shelf, stage 2: highpass — ITU-R BS.1770-4 @48k
-  const s1=biquad(x, 1.53512485958697,-2.69169618940638,1.19839281085285, -1.69065929318241,0.73248077421585);
-  return biquad(s1, 1.0,-2.0,1.0, -1.99004745483398,0.99007225036621);
-}
-function integratedLUFS(chans, sr){
-  if(sr!==48000 || !chans.length || !chans[0].length) return {value:null, exact:false};
-  const kw = chans.map(kWeight);
-  const blk=Math.round(0.4*sr), step=Math.round(0.1*sr);
-  const nBlocks=Math.max(0,Math.floor((kw[0].length-blk)/step)+1);
-  if(nBlocks<=0) return {value:null, exact:false};
-  const z=[]; // per-block summed mean-square across channels (G=1 for L/R)
-  for(let b=0;b<nBlocks;b++){
-    const s0=b*step; let sum=0;
-    for(let c=0;c<kw.length;c++){ let ms=0; const ch=kw[c];
-      for(let i=0;i<blk;i++){const v=ch[s0+i]; ms+=v*v;} sum += ms/blk; }
-    z.push(sum);
+  /* ---------- BS.1770 integrated loudness (K-weighting, 48k) ---------- */
+  function biquad(x,b0,b1,b2,a1,a2){
+    const y=new Float32Array(x.length); let x1=0,x2=0,y1=0,y2=0;
+    for(let i=0;i<x.length;i++){ const xn=x[i]; const yn=b0*xn+b1*x1+b2*x2-a1*y1-a2*y2; x2=x1;x1=xn;y2=y1;y1=yn;y[i]=yn; }
+    return y;
   }
-  const L=zj=> -0.691 + 10*Math.log10(zj+1e-12);
-  // absolute gate -70 LUFS
-  let kept=z.filter(zj=>L(zj)>=-70);
-  if(!kept.length) return {value:null, exact:true};
-  const meanZ = kept.reduce((a,b)=>a+b,0)/kept.length;
-  const relThresh = L(meanZ)-10;
-  kept = z.filter(zj=>L(zj)>=-70 && L(zj)>=relThresh);
-  if(!kept.length) return {value:null, exact:true};
-  const finalZ = kept.reduce((a,b)=>a+b,0)/kept.length;
-  return {value:+L(finalZ).toFixed(2), exact:true};
-}
-
-/* ---------- take assembly + verification ---------- */
-function buildTake(chans, frames, duration, durPerf){
-  const sr=state.sampleRate;
-  const peakDb = state.peak.map(p=> p>0?+(20*Math.log10(p)).toFixed(2):-Infinity);
-  const lufs = integratedLUFS(chans, sr);
-  const noteOns = state.midiEvents.filter(e=>(e.d[0]&0xf0)===0x90 && (e.d[2]||0)>0).length;
-  const noteOffs = state.midiEvents.filter(e=>(e.d[0]&0xf0)===0x80 || ((e.d[0]&0xf0)===0x90 && (e.d[2]||0)===0)).length;
-  const expected = durPerf*sr;
-  const inferredDrop = Math.max(0, Math.round((expected-frames)/128));
-  const avOffset = state.firstMidiPerf!==null ? +(state.firstMidiPerf - state.startPerf).toFixed(2) : null;
-
-  const checks=[];
-  const add=(name,ok,gating,detail,mode)=>checks.push({name,ok,gating,detail,mode});
-
-  add('audio_present', frames>0, true, `${frames.toLocaleString()} frames · ${fmt(duration)}s`, 'authoritative');
-  add('sample_rate', sr===48000, true, `${sr} Hz`, 'authoritative');
-  add('bit_depth_export', true, true, `24-bit PCM WAV`, 'authoritative');
-  add('integrated_lufs', lufs.value!==null, false, lufs.value!==null?`${lufs.value} LUFS (BS.1770, gated)`:'silent / too short', lufs.exact?'authoritative':'inferred');
-  add('true_peak', isFinite(peakDb[0]), false, peakDb.map((d,i)=>`ch${i+1} ${isFinite(d)?d+' dBFS':'-inf'}`).join(' · '), 'authoritative (sample peak)');
-  if(state.midiInput){
-    add('midi_note_balance', noteOns===noteOffs, true, `${noteOns} on / ${noteOffs} off`, 'authoritative');
+  function kWeight(x){
+    const s1=biquad(x,1.53512485958697,-2.69169618940638,1.19839281085285,-1.69065929318241,0.73248077421585);
+    return biquad(s1,1.0,-2.0,1.0,-1.99004745483398,0.99007225036621);
   }
-  add('xruns', true, false, `${inferredDrop} inferred dropout(s) — driver xruns not observable in-browser`, 'inferred · non-gating');
-  add('channel_mapping', true, false, `${state.chanCount} ch as delivered — physical channel identity not verifiable in-browser`, 'inferred · non-gating');
-  if(avOffset!==null) add('av_offset', Math.abs(avOffset)<500, false, `${avOffset} ms (first MIDI vs audio start)`, 'measured');
+  function integratedLUFS(chans, sr){
+    if(sr!==48000 || !chans.length || !chans[0].length) return {value:null, exact:false};
+    const kw=chans.map(kWeight), blk=Math.round(0.4*sr), step=Math.round(0.1*sr);
+    const nB=Math.floor((kw[0].length-blk)/step)+1;
+    if(nB<=0) return {value:null, exact:false};
+    const z=[];
+    for(let b=0;b<nB;b++){ const s0=b*step; let sum=0;
+      for(let c=0;c<kw.length;c++){ let ms=0; const ch=kw[c]; for(let i=0;i<blk;i++){const v=ch[s0+i]; ms+=v*v;} sum+=ms/blk; }
+      z.push(sum); }
+    const L=zj=>-0.691+10*Math.log10(zj+1e-12);
+    let kept=z.filter(zj=>L(zj)>=-70);
+    if(!kept.length) return {value:null, exact:true};
+    const relThresh=L(kept.reduce((a,b)=>a+b,0)/kept.length)-10;
+    kept=z.filter(zj=>L(zj)>=-70 && L(zj)>=relThresh);
+    if(!kept.length) return {value:null, exact:true};
+    return {value:+L(kept.reduce((a,b)=>a+b,0)/kept.length).toFixed(2), exact:true};
+  }
 
-  const verified = checks.filter(c=>c.gating).every(c=>c.ok);
+  /* ---------- tiny event emitter ---------- */
+  function emitter(){
+    const m={}; return {
+      on(e,cb){ (m[e]=m[e]||[]).push(cb); return ()=>{ m[e]=(m[e]||[]).filter(f=>f!==cb); }; },
+      emit(e,v){ (m[e]||[]).forEach(f=>{try{f(v);}catch(_){}}); }
+    };
+  }
+
+  /* ---------- transports ---------- */
+  // Audio transport: wraps an <audio> element fed by the WAV object URL.
+  function makeAudioTransport(objectUrl, durationSec){
+    const el=new Audio(); el.src=objectUrl; el.preload='auto';
+    const ev=emitter(); let raf=0;
+    const loop=()=>{ ev.emit('time', el.currentTime); if(!el.paused && !el.ended) raf=requestAnimationFrame(loop); };
+    el.addEventListener('play',()=>{ ev.emit('play'); cancelAnimationFrame(raf); loop(); });
+    el.addEventListener('pause',()=>{ ev.emit('pause'); });
+    el.addEventListener('ended',()=>{ cancelAnimationFrame(raf); ev.emit('time', el.duration||durationSec||0); ev.emit('ended'); });
+    return {
+      kind:'audio',
+      play(from){ if(from!=null) el.currentTime=from; return el.play(); },
+      pause(){ el.pause(); },
+      seek(s){ el.currentTime=s; ev.emit('time', s); },
+      get currentTime(){ return el.currentTime; },
+      get duration(){ return el.duration || durationSec || 0; },
+      get playing(){ return !el.paused && !el.ended; },
+      on:ev.on, _el:el
+    };
+  }
+
+  // MIDI transport: a small polyphonic Web Audio synth that schedules notes.
+  function makeMidiTransport(notes, durationSec){
+    const ev=emitter();
+    let actx=null, startAt=0, offset=0, playing=false, raf=0, live=[];
+    const dur = durationSec || (notes.length ? Math.max(...notes.map(n=>(n.start_ms+n.dur_ms)))/1000 : 0);
+    function ctx(){ if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)(); return actx; }
+    function voice(n, whenSec){
+      const a=ctx(); const t0=a.currentTime+Math.max(0,whenSec);
+      const durS=Math.max(0.03, n.dur_ms/1000);
+      const osc=a.createOscillator(), g=a.createGain(), amp=Math.min(0.28, (n.velocity/127)*0.28);
+      osc.type='triangle'; osc.frequency.value=midiToFreq(n.pitch);
+      const atk=0.006, rel=0.09;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.0002,amp), t0+atk);
+      g.gain.setValueAtTime(Math.max(0.0002,amp), t0+durS);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0+durS+rel);
+      osc.connect(g).connect(a.destination); osc.start(t0); osc.stop(t0+durS+rel+0.02);
+      live.push(osc);
+    }
+    function schedule(fromSec){
+      stopVoices();
+      for(const n of notes){ const s=n.start_ms/1000; if(s>=fromSec-0.001) voice(n, s-fromSec); }
+    }
+    function stopVoices(){ live.forEach(o=>{try{o.stop();}catch(_){}}); live=[]; }
+    function loop(){ const now=offset+(ctx().currentTime-startAt); ev.emit('time', now);
+      if(now>=dur){ pause(); ev.emit('time', dur); ev.emit('ended'); return; }
+      raf=requestAnimationFrame(loop); }
+    function play(from){ if(from!=null) offset=from; const a=ctx();
+      const go=()=>{ startAt=a.currentTime; schedule(offset); playing=true; ev.emit('play'); cancelAnimationFrame(raf); loop(); };
+      if(a.state==='suspended') a.resume().then(go); else go(); }
+    function pause(){ if(!playing) return; offset=offset+(ctx().currentTime-startAt); playing=false; stopVoices(); cancelAnimationFrame(raf); ev.emit('pause'); }
+    return {
+      kind:'midi', play, pause,
+      seek(s){ offset=Math.max(0,Math.min(dur,s)); if(playing){ startAt=ctx().currentTime; schedule(offset); } ev.emit('time', offset); },
+      get currentTime(){ return playing ? offset+(ctx().currentTime-startAt) : offset; },
+      get duration(){ return dur; },
+      get playing(){ return playing; },
+      on:ev.on
+    };
+  }
+
+  // Combined transport: drives audio + midi together, audio as the clock.
+  function makeCombinedTransport(at, mt){
+    const ev=emitter();
+    at.on('time', t=>{ if(mt) mt.seekSilent ? mt.seekSilent(t) : null; ev.emit('time', t); });
+    at.on('play', ()=>ev.emit('play')); at.on('pause', ()=>ev.emit('pause')); at.on('ended', ()=>ev.emit('ended'));
+    return {
+      kind:'both',
+      play(from){ if(from!=null){ at.seek(from); mt.seek(from);} at.play(); mt.play(at.currentTime); },
+      pause(){ at.pause(); mt.pause(); },
+      seek(s){ at.seek(s); mt.seek(s); ev.emit('time',s); },
+      get currentTime(){ return at.currentTime; },
+      get duration(){ return Math.max(at.duration||0, mt.duration||0); },
+      get playing(){ return at.playing; },
+      on:ev.on
+    };
+  }
+
+  /* ---------- capture state ---------- */
+  const S = {
+    mode:'both', ctx:null, worklet:null, source:null, muteGain:null, analyser:null, analyserData:null, stream:null,
+    midiAccess:null, midiInput:null, recording:false, startPerf:0,
+    chanBufs:[], chanCount:2, recvFrames:0, sampleRate:48000, peak:[], midiEvents:[], firstMidiPerf:null,
+    takes:[]
+  };
+  const statusEv = emitter();
+
+  const workletSrc = `
+class CaptureProcessor extends AudioWorkletProcessor {
+  constructor(){ super(); this.on=false;
+    this.port.onmessage=(e)=>{ if(e.data==='start')this.on=true; else if(e.data==='stop')this.on=false; }; }
+  process(inputs){ const input=inputs[0];
+    if(this.on && input && input.length){ const n=input[0].length; const chans=[];
+      for(let c=0;c<input.length;c++){ const a=new Float32Array(n); a.set(input[c]); chans.push(a); }
+      this.port.postMessage({chans,n}, chans.map(a=>a.buffer)); }
+    return true; }
+}
+registerProcessor('capture-processor', CaptureProcessor);`;
+
+  async function refreshAudioDevices(){
+    const devs=await navigator.mediaDevices.enumerateDevices();
+    return devs.filter(d=>d.kind==='audioinput').map(d=>({id:d.deviceId, label:d.label}));
+  }
+  async function grantAudio(){
+    const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+    s.getTracks().forEach(t=>t.stop());
+    return refreshAudioDevices();
+  }
+  async function grantMidi(){
+    S.midiAccess=await navigator.requestMIDIAccess({sysex:false});
+    return [...S.midiAccess.inputs.values()].map(i=>({id:i.id, name:i.name}));
+  }
+  function listMidi(){ return S.midiAccess?[...S.midiAccess.inputs.values()].map(i=>({id:i.id,name:i.name})):[]; }
+
+  async function start(opts){
+    opts=opts||{}; const mode=opts.mode||S.mode; S.mode=mode;
+    const wantAudio=mode!=='midi', wantMidi=mode!=='audio';
+    S.chanBufs=[]; S.peak=[]; S.recvFrames=0; S.midiEvents=[]; S.firstMidiPerf=null; S.chanCount=2; S.sampleRate=48000;
+
+    if(wantAudio){
+      S.ctx=new (window.AudioContext||window.webkitAudioContext)({sampleRate:48000});
+      await S.ctx.resume();
+      await S.ctx.audioWorklet.addModule(URL.createObjectURL(new Blob([workletSrc],{type:'application/javascript'})));
+      S.stream=await navigator.mediaDevices.getUserMedia({audio:{
+        deviceId:opts.device?{exact:opts.device}:undefined,
+        echoCancellation:false,noiseSuppression:false,autoGainControl:false,channelCount:2 }});
+      S.source=S.ctx.createMediaStreamSource(S.stream);
+      const st=S.stream.getAudioTracks()[0].getSettings();
+      S.chanCount=st.channelCount||S.source.channelCount||2; S.sampleRate=S.ctx.sampleRate;
+      S.worklet=new AudioWorkletNode(S.ctx,'capture-processor',{channelCount:S.chanCount,channelCountMode:'explicit'});
+      S.muteGain=S.ctx.createGain(); S.muteGain.gain.value=0;
+      S.source.connect(S.worklet); S.worklet.connect(S.muteGain); S.muteGain.connect(S.ctx.destination);
+      S.analyser=S.ctx.createAnalyser(); S.analyser.fftSize=1024; S.source.connect(S.analyser);
+      S.analyserData=new Float32Array(S.analyser.fftSize);
+      S.chanBufs=Array.from({length:S.chanCount},()=>[]); S.peak=new Array(S.chanCount).fill(0);
+      S.worklet.port.onmessage=(e)=>{ const {chans,n}=e.data; S.recvFrames+=n;
+        for(let c=0;c<chans.length && c<S.chanCount;c++){ S.chanBufs[c].push(chans[c]);
+          const a=chans[c]; let p=S.peak[c]; for(let i=0;i<a.length;i++){const v=Math.abs(a[i]); if(v>p)p=v;} S.peak[c]=p; } };
+    }
+    if(wantMidi && S.midiAccess && opts.midiPort){
+      S.midiInput=[...S.midiAccess.inputs.values()].find(i=>i.id===opts.midiPort)||null;
+      if(S.midiInput) S.midiInput.onmidimessage=(m)=>{ if(!S.recording) return;
+        if(S.firstMidiPerf===null) S.firstMidiPerf=m.timeStamp;
+        S.midiEvents.push({t:+(m.timeStamp-S.startPerf).toFixed(3), d:Array.from(m.data)});
+        const st=m.data[0]&0xf0; statusEv.emit('midi', {status:st, data:m.data}); };
+    }
+    S.recording=true; S.startPerf=performance.now();
+    if(S.worklet) S.worklet.port.postMessage('start');
+    tick();
+    return true;
+  }
+
+  let tickRAF=0;
+  function tick(){
+    if(!S.recording){ return; }
+    let level=0;
+    if(S.analyser){ S.analyser.getFloatTimeDomainData(S.analyserData); for(const v of S.analyserData){const a=Math.abs(v); if(a>level)level=a;} }
+    const s=(performance.now()-S.startPerf)/1000;
+    const expected=s*S.sampleRate, drop=Math.max(0,Math.round((expected-S.recvFrames)/128));
+    statusEv.emit('status', {recording:true, elapsed_s:s, level, frames:S.recvFrames, midi:S.midiEvents.length, drop});
+    tickRAF=requestAnimationFrame(tick);
+  }
+
+  async function stop(){
+    if(!S.recording) return null;
+    S.recording=false; cancelAnimationFrame(tickRAF);
+    if(S.worklet) S.worklet.port.postMessage('stop');
+    const durPerf=(performance.now()-S.startPerf)/1000;
+    const mode=S.mode;
+
+    // flatten audio
+    let chans=[], frames=0, duration=0;
+    if(mode!=='midi'){
+      chans=S.chanBufs.map(chunks=>{ let len=0; for(const c of chunks)len+=c.length; const out=new Float32Array(len); let o=0; for(const c of chunks){out.set(c,o);o+=c.length;} return out; });
+      frames=chans[0]?chans[0].length:0; duration=frames/S.sampleRate;
+    }
+    if(S.midiInput) S.midiInput.onmidimessage=null;
+    try{ if(S.stream) S.stream.getTracks().forEach(t=>t.stop()); }catch(_){}
+    try{ if(S.ctx) await S.ctx.close(); }catch(_){}
+
+    const take=assemble(mode, chans, frames, duration, durPerf);
+    S.takes.unshift(take);
+    return take;
+  }
+
+  function assemble(mode, chans, frames, duration, durPerf){
+    const sr=S.sampleRate;
+    const hasAudio=mode!=='midi', hasMidi=mode!=='audio';
+    const peakDb=hasAudio ? S.peak.map(p=>p>0?+(20*Math.log10(p)).toFixed(2):-Infinity) : [];
+    const lufs=hasAudio ? integratedLUFS(chans, sr) : {value:null,exact:false};
+    const noteOns=S.midiEvents.filter(e=>(e.d[0]&0xf0)===0x90 && (e.d[2]||0)>0).length;
+    const noteOffs=S.midiEvents.filter(e=>(e.d[0]&0xf0)===0x80 || ((e.d[0]&0xf0)===0x90 && (e.d[2]||0)===0)).length;
+    const inferredDrop=hasAudio ? Math.max(0,Math.round((durPerf*sr-frames)/128)) : 0;
+    const avOffset=(mode==='both' && S.firstMidiPerf!==null) ? +(S.firstMidiPerf-S.startPerf).toFixed(2) : null;
+    const notes=hasMidi ? resolveMidiNotes(S.midiEvents, durPerf*1000) : [];
+
+    const ver=buildChecks(mode, {frames,rate:sr,duration,peakDb,lufs,noteOns,noteOffs,inferredDrop,chanCount:S.chanCount,avOffset,events:S.midiEvents.length,notes:notes.length});
+
+    const take={
+      schema:SCHEMA, name:(S._name||'take'), created:new Date().toISOString(), mode,
+      engine:{adapter:'browser', ua:navigator.userAgent},
+      captured:{
+        channels:hasAudio?S.chanCount:null, rate:hasAudio?sr:null, bit_depth:hasAudio?24:null,
+        frames:hasAudio?frames:null, duration_s:hasAudio?+duration.toFixed(3):null,
+        xruns:null, xruns_inferred:hasAudio?inferredDrop:null,
+        av_offset_ms:avOffset, midi_events:hasMidi?S.midiEvents.length:null
+      },
+      tracks: hasAudio ? chans.map((_,i)=>({file:'audio.wav', channel:i+1, peak_dbfs:isFinite(peakDb[i])?peakDb[i]:null, integrated_lufs:i===0?lufs.value:null})) : null,
+      midi: hasMidi ? {file:'midi.json', events:S.midiEvents.length, note_ons:noteOns, note_offs:noteOffs, notes} : null,
+      verification:ver
+    };
+
+    // runtime render aids (not serialized)
+    if(hasAudio){
+      const wav=encodeWAV(chans, sr, 24);
+      take._wavBlob=wav;
+      take.audio={ objectUrl:URL.createObjectURL(wav), peaks:computePeaks(chans,PEAK_BUCKETS), sampleRate:sr, duration_s:+duration.toFixed(3) };
+      take.audioTransport=makeAudioTransport(take.audio.objectUrl, duration);
+    }
+    if(hasMidi){
+      take._midiEvents=S.midiEvents.slice();
+      const mdur = hasAudio ? duration : durPerf;
+      take.midiTransport=makeMidiTransport(notes, mdur);
+    }
+    take.transport = (hasAudio && hasMidi) ? makeCombinedTransport(take.audioTransport, take.midiTransport)
+                     : (hasAudio ? take.audioTransport : take.midiTransport);
+    return take;
+  }
+
+  // JSON-safe serialization (strips runtime aids; keeps resolved notes).
+  function serializeTake(take){
+    return {
+      schema:take.schema, name:take.name, created:take.created, mode:take.mode, engine:take.engine,
+      captured:take.captured, tracks:take.tracks, midi:take.midi, verification:take.verification
+    };
+  }
 
   return {
-    schema:'lufs-recorder/take@0.1-browser',
-    name:$('#takeName').value||'take',
-    created: new Date().toISOString(),
-    engine:{adapter:'browser', ua:navigator.userAgent},
-    captured:{
-      channels:state.chanCount, rate:sr, bit_depth:24, frames, duration_s:+duration.toFixed(3),
-      xruns:null, xruns_inferred:inferredDrop, av_offset_ms:avOffset, midi_events:state.midiEvents.length
-    },
-    tracks: chans.map((_,i)=>({file:'audio.wav', channel:i+1, peak_dbfs:isFinite(peakDb[i])?peakDb[i]:null, integrated_lufs:i===0?lufs.value:null})),
-    midi: state.midiInput?{file:'midi.json', events:state.midiEvents.length, note_ons:noteOns, note_offs:noteOffs}:null,
-    verification:{ verified, checks }
+    caps, PEAK_BUCKETS,
+    get mode(){return S.mode;}, setMode(m){ S.mode=m; },
+    setName(n){ S._name=n; },
+    grantAudio, grantMidi, refreshAudioDevices, listMidi,
+    start, stop, onStatus:statusEv.on, onMidi:(cb)=>statusEv.on('midi',cb),
+    get takes(){return S.takes;},
+    serializeTake, encodeWAV,
+    // exposed for tests / advanced surfaces:
+    _pure:{ midiToFreq, resolveMidiNotes, computePeaks, buildChecks, integratedLUFS }
   };
-}
+})();
+</script>
 
-/* ---------- render take + downloads ---------- */
-function renderTake(take, chans){
-  const host=$('#takes');
-  if(host.querySelector('.note')) host.innerHTML='';
-  const wavBlob = encodeWAV(chans, state.sampleRate, 24);
-  const takeBlob = new Blob([JSON.stringify(take,null,2)],{type:'application/json'});
-  const midiBlob = take.midi ? new Blob([JSON.stringify(state.midiEvents,null,2)],{type:'application/json'}) : null;
-  const base = take.name.replace(/[^\w.-]+/g,'_')+'-'+take.created.replace(/[:.]/g,'-').slice(0,19);
+<script>
+/* ============================================================================
+   Throwaway reference UI — binds to window.LUFSRec. Replaceable wholesale.
+   ========================================================================== */
+(function(){
+  const R=window.LUFSRec, $=s=>document.querySelector(s);
+  const fmtT=s=>{ s=Math.max(0,s||0); return String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0'); };
 
-  const el=document.createElement('div'); el.className='take';
-  el.innerHTML=`
-    <div class="top">
-      <span class="name">${take.name} · ${fmt(take.captured.duration_s)}s · ${take.captured.channels}ch/${take.captured.rate/1000}k</span>
-      <span class="badge ${take.verification.verified?'v':'f'}">${take.verification.verified?'VERIFIED':'FAILED'}</span>
-    </div>
-    <div class="checks">${take.verification.checks.map(c=>`
-      <div class="chk">
-        <span class="ic ${c.ok?'yes':(c.gating?'no':'part')}">${c.ok?'✓':(c.gating?'✗':'○')}</span>
-        <span class="nm">${c.name}</span>
-        <span class="dt">${c.detail}</span>
-        <span class="tag">${c.gating?'gating':'info'} · ${c.mode.split(' ')[0]}</span>
-      </div>`).join('')}</div>
-    <div class="dl"></div>
-    <p class="note">Verified = all <b>gating</b> checks pass. Inferred / info checks report honestly but never gate — that is the honest-failure contract, ported to the sandbox.</p>`;
-  const dl=el.querySelector('.dl');
-  const mk=(label,blob,fname)=>{const b=document.createElement('button');b.textContent=label;
-    b.onclick=()=>{const u=URL.createObjectURL(blob);const a=document.createElement('a');a.href=u;a.download=fname;a.click();setTimeout(()=>URL.revokeObjectURL(u),2000);};dl.appendChild(b);};
-  mk('▼ audio.wav', wavBlob, base+'.wav');
-  mk('▼ take.json', takeBlob, base+'.take.json');
-  if(midiBlob) mk('▼ midi.json', midiBlob, base+'.midi.json');
-  if(CAPS.fsa){ const b=document.createElement('button'); b.textContent='▼ save take folder'; b.className='primary';
-    b.onclick=async()=>{ try{
-      const dir=await window.showDirectoryPicker();
-      const sub=await dir.getDirectoryHandle(base,{create:true});
-      for(const [fn,blob] of [['audio.wav',wavBlob],['take.json',takeBlob],...(midiBlob?[['midi.json',midiBlob]]:[])]){
-        const fh=await sub.getFileHandle(fn,{create:true}); const w=await fh.createWritable(); await w.write(blob); await w.close();
-      }
-      b.textContent='✓ saved'; }catch(e){ if(e.name!=='AbortError') alert('Save failed: '+e.message);} };
-    dl.appendChild(b);
-  }
-  host.prepend(el);
-}
+  /* capability panel + banner */
+  (function caps(){
+    const c=R.caps, iOS=c.iOS;
+    const rows=[
+      ['secure context', c.secure?'yes':'no'],
+      ['Web MIDI API', c.midi?'yes':(iOS?'no · iOS':'no')],
+      ['getUserMedia', c.gum?'yes':'no'],
+      ['AudioWorklet', c.worklet?'yes':'no'],
+      ['File System Access', c.fsa?'yes':'part'],
+      ['embedded iframe', c.iframed?'part':'no'],
+    ];
+    $('#caps').innerHTML=rows.map(([k,v])=>`<span class="k">${k}</span><span class="pill ${v==='yes'?'yes':(v.startsWith('no')?'no':'part')}">${v}</span>`).join('');
+    const notes=[];
+    if(!c.secure) notes.push('Not a secure context — device access is blocked. Serve over https or localhost.');
+    if(c.iframed) notes.push('Embedded iframe: mic/MIDI may be blocked unless the parent allows them — open in a new tab.');
+    if(!c.midi) notes.push('No Web MIDI here (Safari/iOS). Use audio-only mode.');
+    if(iOS) notes.push('iOS: no Web MIDI; audio limited to the default input.');
+    $('#capsNote').textContent=notes.join(' ');
+    const b=$('#banner');
+    if(c.iframed || !c.secure){ b.classList.add('show'); b.innerHTML=(!c.secure?'⚠ insecure context — capture disabled. ':'')+(c.iframed?'⚠ embedded preview may block mic/MIDI — <b>open in a new tab</b>.':''); }
+  })();
 
-/* ---------- PWA: register service worker (real origin only) ---------- */
-if('serviceWorker' in navigator){
-  window.addEventListener('load', ()=>{
-    navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('sw register failed (expected off-origin):', e.message));
+  /* mode switch */
+  let mode='both';
+  $('#modeswitch').addEventListener('click', e=>{ const btn=e.target.closest('button[data-mode]'); if(!btn)return;
+    mode=btn.dataset.mode; R.setMode(mode);
+    [...$('#modeswitch').children].forEach(b=>b.setAttribute('aria-pressed', b===btn));
+    $('#sMode').textContent=btn.textContent; enable();
   });
-}
 
-// prime device labels quietly if permission already granted
-if(CAPS.gum) navigator.mediaDevices.enumerateDevices().then(d=>{ if(d.some(x=>x.label)) refreshAudioDevices(); });
-maybeEnableRecord();
+  /* devices */
+  $('#grantAudio').onclick=async()=>{ try{ const devs=await R.grantAudio(); fillAudio(devs); enable(); }catch(e){ alert('Audio denied/unavailable: '+e.message);} };
+  $('#grantMidi').onclick=async()=>{ if(!R.caps.midi){ alert('Web MIDI not supported (Safari/iOS).'); return; } try{ const ins=await R.grantMidi(); fillMidi(ins); if(R.caps.midi&&R.listMidi().length) R.grantMidi().then(fillMidi); enable(); }catch(e){ alert('MIDI denied: '+e.message);} };
+  function fillAudio(devs){ const s=$('#audioDev'); s.innerHTML = devs.length?devs.map((d,i)=>`<option value="${d.id}">${d.label||('input '+(i+1))}</option>`).join(''):'<option>— none —</option>'; }
+  function fillMidi(ins){ const s=$('#midiDev'); s.innerHTML = ins.length?ins.map(i=>`<option value="${i.id}">${i.name}</option>`).join(''):'<option>— no MIDI inputs —</option>'; }
+  $('#takeName').addEventListener('input', e=>R.setName(e.target.value));
+  R.setName($('#takeName').value);
+
+  function audioReady(){ const v=$('#audioDev').value; return v && !v.startsWith('—'); }
+  function midiReady(){ const v=$('#midiDev').value; return v && !v.startsWith('—'); }
+  function enable(){
+    const needA=mode!=='midi', needM=mode!=='audio';
+    const ok=R.caps.secure && (!needA || (R.caps.gum&&R.caps.worklet&&audioReady())) && (!needM || (R.caps.midi&&midiReady()));
+    $('#recBtn').disabled=!ok; $('#dial').classList.toggle('armed', ok);
+  }
+  $('#audioDev').onchange=enable; $('#midiDev').onchange=enable;
+
+  /* meters */
+  function buildMeters(n){ const m=$('#meters'); m.innerHTML=''; for(let i=0;i<n;i++) m.insertAdjacentHTML('beforeend',`<div class="meter"><i></i></div>`); }
+  buildMeters(2);
+
+  R.onStatus(s=>{
+    $('#dial').textContent=fmtT(s.elapsed_s);
+    $('#sFrames').textContent=(s.frames||0).toLocaleString();
+    $('#sMidi').textContent=s.midi||0; $('#sDrop').textContent=s.drop||0;
+    const db=s.level>0?20*Math.log10(s.level):-100, pct=Math.max(0,Math.min(100,(db+60)/60*100));
+    document.querySelectorAll('#meters .meter i').forEach(el=>el.style.height=pct+'%');
+  });
+  R.onMidi(m=>{ const st=m.status; $('#midimon').textContent=`${st===0x90?'▸ note-on':st===0x80?'▹ note-off':'· '+st.toString(16)} ${m.data[1]??''} v${m.data[2]??''}`; });
+
+  /* record / stop */
+  $('#recBtn').onclick=async()=>{
+    try{
+      buildMeters(mode==='midi'?0:2);
+      await R.start({mode, device:$('#audioDev').value, midiPort:$('#midiDev').value});
+      $('#recBtn').disabled=true; $('#stopBtn').disabled=false;
+      $('#dial').classList.remove('armed'); $('#dial').classList.add('live');
+    }catch(e){ alert('Could not start: '+e.message); console.error(e); }
+  };
+  $('#stopBtn').onclick=async()=>{
+    const take=await R.stop();
+    $('#stopBtn').disabled=true; $('#dial').classList.remove('live'); $('#midimon').textContent='idle';
+    $('#sSr').textContent=(take&&take.captured&&take.captured.rate)?take.captured.rate+' Hz':'—';
+    if(take) renderTake(take); enable();
+  };
+
+  /* ---------- render a take (waveform + piano roll + transport) ---------- */
+  function renderTake(take){
+    const host=$('#takes'); if(host.querySelector('.note')) host.innerHTML='';
+    const el=document.createElement('div'); el.className='take'; el.dataset.mode=take.mode;
+    el.innerHTML=`
+      <div class="top">
+        <span class="name">${take.name} <span class="modetag">${take.mode}</span></span>
+        <span class="badge ${take.verification.verified?'v':'f'}">${take.verification.verified?'VERIFIED':'FAILED'}</span>
+      </div>
+      <div class="checks">${take.verification.checks.map(c=>`
+        <div class="chk"><span class="ic ${c.ok?'yes':(c.gating?'no':'part')}">${c.ok?'✓':(c.gating?'✗':'○')}</span>
+        <span class="nm">${c.name}</span><span class="dt">${c.detail}</span>
+        <span class="tag">${c.gating?'gating':'info'} · ${c.mode.split(' ')[0]}</span></div>`).join('')}</div>
+      <div class="viz-slot"></div>
+      <div class="transport-slot"></div>
+      <div class="dl"></div>
+      <p class="note">Verified = all <b>gating</b> checks pass. Inferred/info checks report honestly but never gate.</p>`;
+    host.prepend(el);
+
+    const vizSlot=el.querySelector('.viz-slot');
+    // waveform
+    if(take.audio){ const wrap=document.createElement('div'); wrap.className='viz waveform';
+      const cv=document.createElement('canvas'); const ph=document.createElement('div'); ph.className='playhead';
+      wrap.appendChild(cv); wrap.appendChild(ph); vizSlot.appendChild(wrap);
+      drawWaveform(cv, take.audio.peaks);
+      wrap.addEventListener('click', ev=>{ const r=wrap.getBoundingClientRect(); const f=(ev.clientX-r.left)/r.width; take.transport.seek(f*take.transport.duration); });
+      take._wavePh=ph; take._waveWrap=wrap;
+    }
+    // piano roll
+    if(take.midi){ const wrap=document.createElement('div'); wrap.className='viz pianoroll';
+      const cv=document.createElement('canvas'); const ph=document.createElement('div'); ph.className='playhead';
+      wrap.appendChild(cv); wrap.appendChild(ph); vizSlot.appendChild(wrap);
+      const dur=(take.audio?take.audio.duration_s:take.midiTransport.duration)||1;
+      drawPianoRoll(cv, take.midi.notes, dur);
+      wrap.addEventListener('click', ev=>{ const r=wrap.getBoundingClientRect(); const f=(ev.clientX-r.left)/r.width; take.transport.seek(f*take.transport.duration); });
+      take._rollPh=ph; take._rollWrap=wrap;
+    }
+    // transport
+    const t=take.transport, ts=el.querySelector('.transport-slot');
+    ts.innerHTML=`<div class="transport"><button class="play">▶ play</button><span class="cur">00:00</span><input type="range" min="0" max="1000" value="0"><span class="dur">${fmtT(t.duration)}</span></div>`;
+    const playBtn=ts.querySelector('.play'), range=ts.querySelector('input'), cur=ts.querySelector('.cur');
+    playBtn.onclick=()=>{ if(t.playing){ t.pause(); } else { t.play(); } };
+    range.addEventListener('input', ()=>{ t.seek(range.value/1000*t.duration); });
+    t.on('play', ()=>playBtn.textContent='❚❚ pause');
+    t.on('pause', ()=>playBtn.textContent='▶ play');
+    t.on('ended', ()=>{ playBtn.textContent='▶ play'; });
+    t.on('time', sec=>{ const d=t.duration||1; const f=Math.max(0,Math.min(1,sec/d));
+      cur.textContent=fmtT(sec); range.value=Math.round(f*1000);
+      if(take._wavePh) take._wavePh.style.left=(f*take._waveWrap.clientWidth)+'px';
+      if(take._rollPh) take._rollPh.style.left=(f*take._rollWrap.clientWidth)+'px';
+    });
+
+    // downloads
+    const dl=el.querySelector('.dl');
+    const mk=(label,blob,fname,cls)=>{ const b=document.createElement('button'); if(cls)b.className=cls; b.textContent=label;
+      b.onclick=()=>{ const u=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=u; a.download=fname; a.click(); setTimeout(()=>URL.revokeObjectURL(u),2000); }; dl.appendChild(b); };
+    const base=take.name.replace(/[^\w.-]+/g,'_')+'-'+take.created.replace(/[:.]/g,'-').slice(0,19);
+    const takeJson=new Blob([JSON.stringify(R.serializeTake(take),null,2)],{type:'application/json'});
+    if(take._wavBlob) mk('▼ audio.wav', take._wavBlob, base+'.wav');
+    if(take._midiEvents) mk('▼ midi.json', new Blob([JSON.stringify(take._midiEvents,null,2)],{type:'application/json'}), base+'.midi.json');
+    mk('▼ take.json', takeJson, base+'.take.json');
+  }
+
+  function drawWaveform(cv, peaks){
+    const w=cv.clientWidth||600, h=cv.clientHeight||96, dpr=window.devicePixelRatio||1;
+    cv.width=w*dpr; cv.height=h*dpr; const g=cv.getContext('2d'); g.scale(dpr,dpr);
+    g.clearRect(0,0,w,h); g.fillStyle='#78BEBA'; const mid=h/2, n=peaks.buckets, bw=w/n;
+    for(let i=0;i<n;i++){ const x=i*bw; const y1=mid-(peaks.max[i]*mid), y2=mid-(peaks.min[i]*mid); g.fillRect(x, Math.min(y1,y2), Math.max(1,bw*0.8), Math.max(1,Math.abs(y2-y1))); }
+    g.strokeStyle='#2c2c2c'; g.beginPath(); g.moveTo(0,mid); g.lineTo(w,mid); g.stroke();
+  }
+  function drawPianoRoll(cv, notes, durSec){
+    const w=cv.clientWidth||600, h=cv.clientHeight||160, dpr=window.devicePixelRatio||1;
+    cv.width=w*dpr; cv.height=h*dpr; const g=cv.getContext('2d'); g.scale(dpr,dpr);
+    g.clearRect(0,0,w,h);
+    if(!notes.length){ g.fillStyle='#8a8a84'; g.font='11px monospace'; g.fillText('no notes', 10, h/2); return; }
+    let lo=Math.min(...notes.map(n=>n.pitch)), hi=Math.max(...notes.map(n=>n.pitch));
+    lo-=1; hi+=1; const span=Math.max(1,hi-lo), rh=h/span, dur=durSec||Math.max(...notes.map(n=>(n.start_ms+n.dur_ms)/1000))||1;
+    // rows
+    for(let p=lo;p<=hi;p++){ const y=h-((p-lo+1)*rh); const black=[1,3,6,8,10].includes(((p%12)+12)%12);
+      g.fillStyle=black?'#161616':'#1b1b1b'; g.fillRect(0,y,w,rh); }
+    // notes
+    for(const n of notes){ const x=(n.start_ms/1000/dur)*w, nw=Math.max(2,(n.dur_ms/1000/dur)*w), y=h-((n.pitch-lo+1)*rh);
+      const a=0.45+0.55*(n.velocity/127); g.fillStyle=`rgba(120,190,186,${a.toFixed(3)})`;
+      g.fillRect(x, y+1, nw, Math.max(2,rh-2)); g.strokeStyle='rgba(6,32,31,.6)'; g.strokeRect(x, y+1, nw, Math.max(2,rh-2)); }
+  }
+
+  enable();
+
+  /* PWA: register service worker (real origin only) */
+  if('serviceWorker' in navigator){ window.addEventListener('load', ()=>{ navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('sw register failed (expected off-origin):', e.message)); }); }
+
+  /* prime device labels if permission already granted */
+  if(R.caps.gum) navigator.mediaDevices.enumerateDevices().then(d=>{ if(d.some(x=>x.label)) R.refreshAudioDevices().then(fillAudio).then(enable); });
+})();
 </script>
 </body>
 </html>

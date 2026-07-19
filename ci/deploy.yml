@@ -1,0 +1,48 @@
+# lufs-recorder-pwa — website-portability output-branch deploy adapter.
+# STAGED HERE because the GitHub app token cannot write .github/workflows/.
+# A human/local agent activates it:
+#   git mv ci/deploy.yml .github/workflows/deploy.yml && git commit -m "ci: activate deploy" && git push
+# Then point the host at the `deploy` branch (GitHub Pages: Settings -> Pages ->
+# Deploy from a branch -> deploy / root). Build once -> verify (fail-closed) ->
+# retain off-host -> publish. A red verify never updates `deploy`.
+#
+# SECURITY: pin third-party actions to commit SHAs before this ships as the real deploy
+# (KB policy). @vN tags are shown here for readability only.
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # least privilege: only what publishing the output branch needs
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-verify-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4            # TODO: pin to SHA
+      - uses: actions/setup-python@v5        # TODO: pin to SHA
+        with:
+          python-version: "3.12"
+      - name: Verify source artifact (fail-closed)
+        run: bash scripts/verify
+      - name: Package release (dist/ + provenance)
+        run: bash scripts/package
+      - name: Retain build off-host
+        uses: actions/upload-artifact@v4     # TODO: pin to SHA
+        with:
+          name: lufs-recorder-pwa-dist
+          path: dist/
+          retention-days: 30
+      - name: Publish verified output to deploy branch
+        uses: peaceiris/actions-gh-pages@v4  # TODO: pin to SHA
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: deploy
+          commit_message: "deploy: ${{ github.sha }}"

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# lufs-recorder-pwa — deployed smoke check. Prove the live URL serves the right artifact.
+# Usage: scripts/smoke https://danialrami.github.io/lufs-recorder-pwa/
+set -euo pipefail
+URL="${1:?usage: scripts/smoke <deployed-url>}"
+MARKER="lufs-recorder"
+fail=0
+
+check(){ # path expected-substring
+  local u="${URL%/}/$1" body
+  if body=$(curl -fsSL --max-time 10 "$u"); then
+    if printf '%s' "$body" | grep -q "$2"; then echo "  ok    $1"; else echo "  FAIL  $1 (marker '$2' missing)"; fail=$((fail+1)); fi
+  else echo "  FAIL  $1 (non-200)"; fail=$((fail+1)); fi
+}
+
+echo "smoke: $URL"
+check "" "$MARKER"
+check "manifest.webmanifest" "lufs-recorder"
+check "sw.js" "CACHE"
+
+echo
+if [ "$fail" -eq 0 ]; then echo "SMOKE: PASS"; else echo "SMOKE: FAIL ($fail)"; fi
+[ "$fail" -eq 0 ]

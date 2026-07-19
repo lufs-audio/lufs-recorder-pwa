@@ -1,0 +1,19 @@
+# Neutral header intent (translated per host adapter).
+# PWA correctness: the service worker and HTML entry MUST NOT be long-cached, or
+# clients get stuck on stale logic. Only the versioned icon may be cached hard.
+headers:
+  - path: /sw.js
+    values:
+      Cache-Control: "no-cache"
+  - path: /*.html
+    values:
+      Cache-Control: "no-cache"
+      X-Content-Type-Options: "nosniff"
+  - path: /manifest.webmanifest
+    values:
+      Cache-Control: "no-cache"
+      Content-Type: "application/manifest+json"
+  - path: /icons/*
+    values:
+      Cache-Control: "public, max-age=86400"
+      X-Content-Type-Options: "nosniff"
