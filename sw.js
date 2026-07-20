@@ -3,7 +3,7 @@
  * The recorder itself is fully client-side; the SW only serves static assets.
  * BUMP CACHE on every release so clients pick up new logic (verified by scripts/verify).
  */
-const CACHE = 'lufs-rec-v0.3.0';
+const CACHE = 'lufs-rec-v0.3.1';
 const SHELL = [
   './',
   './index.html',
