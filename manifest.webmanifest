@@ -1,5 +1,5 @@
 {
-  "name": "lufs-recorder · browser",
+  "name": "lufs-recorder · PWA",
   "short_name": "lufs-rec",
   "description": "Zero-install, agent-first audio + MIDI capture in the browser. Verifies takes honestly and exports a take.json that shares the native lufs-recorder schema.",
   "id": "/",
