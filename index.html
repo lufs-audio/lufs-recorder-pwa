@@ -108,9 +108,10 @@
   .take .tname{font-family:var(--mono);font-size:13px}
   .take .top .r{display:flex;align-items:center;gap:10px}
   .take .top .r .m{font-family:var(--mono);font-size:10px;color:var(--mut)}
-  .viz{position:relative;overflow:hidden;background:var(--ground);border:1px solid var(--line);border-radius:8px;margin-top:8px}
-  .viz canvas{display:block;width:100%;height:100%}
-  .viz .playhead{position:absolute;top:0;bottom:0;width:1px;background:var(--red);left:0;pointer-events:none;box-shadow:0 0 6px rgba(211,82,51,.6)}
+  .viz{position:relative;overflow:hidden;background:var(--ground);border:1px solid var(--line);border-radius:8px;margin-top:8px;touch-action:none;cursor:ew-resize}
+  .viz canvas{display:block;width:100%;height:100%;pointer-events:none}
+  .viz .playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--red);left:0;pointer-events:none;box-shadow:0 0 6px rgba(211,82,51,.6)}
+  .viz .playhead::after{content:"";position:absolute;top:-1px;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 6px rgba(211,82,51,.7)}
   .viz .vlabel{position:absolute;top:7px;left:9px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);pointer-events:none}
   .viz.waveform{height:88px} .viz.pianoroll{height:172px}
   .transport{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:10px}
@@ -803,6 +804,16 @@ registerProcessor('capture-processor', CaptureProcessor);`;
   }
   function vizEl(cls, label){ var w=document.createElement('div'); w.className='viz '+cls;
     w.innerHTML='<canvas></canvas><div class="playhead"></div>'+(label?'<div class="vlabel">'+label+'</div>':''); return w; }
+  /* grab-and-scrub on the viz itself (mouse + touch + pen via Pointer Events).
+     pointerdown seeks + captures; drag follows the finger; the playhead tracks. */
+  function attachScrub(wrap, take){
+    var dragging=false;
+    function seekAt(ev){ var r=wrap.getBoundingClientRect(); var f=Math.max(0,Math.min(1,(ev.clientX-r.left)/r.width)); take.transport.seek(f*take.transport.duration); }
+    wrap.addEventListener('pointerdown', function(ev){ dragging=true; try{ wrap.setPointerCapture(ev.pointerId); }catch(_){ } seekAt(ev); ev.preventDefault(); });
+    wrap.addEventListener('pointermove', function(ev){ if(dragging) seekAt(ev); });
+    wrap.addEventListener('pointerup', function(ev){ dragging=false; try{ wrap.releasePointerCapture(ev.pointerId); }catch(_){ } });
+    wrap.addEventListener('pointercancel', function(){ dragging=false; });
+  }
   function download(blob, fname){ var u=URL.createObjectURL(blob), a=document.createElement('a'); a.href=u; a.download=fname; a.click(); setTimeout(function(){URL.revokeObjectURL(u);},1500); }
 
   function renderTake(take){
@@ -818,12 +829,12 @@ registerProcessor('capture-processor', CaptureProcessor);`;
     var vc=$('.vizcol',el), heads=[], waveCv=null, rollCv=null, desk=isDesktop();
     if(take.audio){ var ww=vizEl('waveform','ch 1–2'); vc.appendChild(ww); waveCv=$('canvas',ww); var wph=$('.playhead',ww);
       (function(cv,pk){ requestAnimationFrame(function(){ drawWave(cv,pk,desk); }); })(waveCv, take.audio.peaks);
-      ww.addEventListener('click', function(ev){ var r=ww.getBoundingClientRect(); take.transport.seek((ev.clientX-r.left)/r.width*take.transport.duration); });
+      attachScrub(ww, take);
       heads.push({el:wph, wrap:ww}); }
     if(take.midi){ var rw=vizEl('pianoroll','midi · roll'); vc.appendChild(rw); rollCv=$('canvas',rw); var rph=$('.playhead',rw);
       var dur=(take.audio?take.audio.duration_s:take.transport.duration)||1;
       (function(cv,nt,du){ requestAnimationFrame(function(){ drawRoll(cv,nt,du,desk); }); })(rollCv, take.midi.notes, dur);
-      rw.addEventListener('click', function(ev){ var r=rw.getBoundingClientRect(); take.transport.seek((ev.clientX-r.left)/r.width*take.transport.duration); });
+      attachScrub(rw, take);
       heads.push({el:rph, wrap:rw}); }
 
     var t=take.transport, playBtn=$('.play',el), range=$('input',el), cur=$('.cur',el), durEl=$('.dur',el);
