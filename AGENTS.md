@@ -5,8 +5,14 @@ Agent-facing front door for the browser-native lufs-recorder. Read this before c
 ## What this is
 A **zero-install, browser-native capture adapter** in the lufs-recorder family. Records audio + MIDI
 entirely client-side, verifies each take **honestly**, exports a `take.json` that shares the native
-recorder's schema, and (this rev) plays takes back — waveform scrub for audio, a piano-roll driven by
-an in-browser Web Audio synth for MIDI. **Tier A pure static, zero build, zero external origins.**
+recorder's schema, and plays takes back — drag-scrub waveform for audio, a branded piano-roll driven by
+an in-browser Web Audio synth for MIDI. Shipped: **v0.3.1**, live at <https://lufs-recorder-pwa.exe.xyz/>,
+production surface = **Rack** (desktop) + **Tap** (mobile). **Tier A pure static, zero build, zero
+external origins**, one self-contained `index.html`.
+
+**Parked next step:** on-device recording durability (a local "voice-memos"-style library). Designed,
+not built — see `docs/DURABILITY.md` and the `agent-knowledge` suite `docs/product/lufs-recorder-pwa/`.
+Keep it off `main` until its own session; don't let it erode the single-file simplicity.
 
 ## Architecture — the engine/surface seam
 - **Engine = the product.** All capture, verification, WAV/LUFS DSP, MIDI note resolution, and synth
@@ -35,6 +41,7 @@ scripts/package         # assemble dist/ + SHA256SUMS + artifact.json + verifica
 scripts/smoke           # deployed-URL check
 ci/deploy.yml           # staged workflow (a human/local agent moves it to .github/workflows/)
 docs/SURFACE-CONTRACT.md# the data + transport contract for the design pass
+docs/DURABILITY.md      # parked roadmap: on-device recordings library (OPFS + IndexedDB)
 ```
 
 ## Before you call anything done
