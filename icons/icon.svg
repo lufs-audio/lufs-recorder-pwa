@@ -1,7 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="lufs-recorder">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="lufs-recorder browser">
+  <defs>
+    <linearGradient id="gl" gradientUnits="userSpaceOnUse" x1="216.656" y1="402.816" x2="216.656" y2="109.184">
+      <stop offset="0" stop-color="#78BEBA"/><stop offset="0.6" stop-color="#D9A23D"/><stop offset="1" stop-color="#D35233"/>
+    </linearGradient>
+    <linearGradient id="gr" gradientUnits="userSpaceOnUse" x1="295.344" y1="109.184" x2="295.344" y2="402.816">
+      <stop offset="0" stop-color="#78BEBA"/><stop offset="0.6" stop-color="#D9A23D"/><stop offset="1" stop-color="#D35233"/>
+    </linearGradient>
+  </defs>
   <rect width="512" height="512" rx="112" fill="#111111"/>
-  <!-- capture ring (teal) -->
-  <circle cx="256" cy="256" r="150" fill="none" stroke="#78BEBA" stroke-width="20"/>
-  <!-- record dot (red) -->
-  <circle cx="256" cy="256" r="74" fill="#D35233"/>
+  <path d="M216.656 402.816 A152 152 0 0 1 216.656 109.184" fill="none" stroke="url(#gl)" stroke-width="32" stroke-linecap="round"/>
+  <path d="M295.344 109.184 A152 152 0 0 1 295.344 402.816" fill="none" stroke="url(#gr)" stroke-width="32" stroke-linecap="round"/>
+  <circle cx="256" cy="256" r="67" fill="#D35233"/>
 </svg>
