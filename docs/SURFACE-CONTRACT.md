@@ -6,6 +6,11 @@ arranges; it never forks engine logic.** Drive everything from the data + transp
 
 > Ciani owns this file (the engine contract). Amacher owns the visual design that consumes it.
 
+> **Status (v0.3.1):** the production surface — **Rack** (desktop) + **Tap** (mobile), by Amacher — has
+> shipped against this contract and is live. This document remains the binding spec for any future
+> surface, most immediately the planned **recordings Library** view (see `docs/DURABILITY.md`), whose
+> store layer will extend `window.LUFSRec` without changing this rendering contract.
+
 ## Engine API — `window.LUFSRec`
 
 ```

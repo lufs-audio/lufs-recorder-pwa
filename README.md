@@ -4,7 +4,9 @@ A **zero-install, browser-native capture adapter** for the [lufs-recorder](https
 
 It is the **sibling** of the native recorder, not a replacement. The native tool owns studio-grade, multichannel, driver-verified capture. This one owns the *record-from-any-laptop, nothing-to-install* job: quick MIDI/audio sketch capture, a demo/onboarding surface, and a capture point on machines where you can't (or won't) install anything.
 
-> This is currently a single-page app with a deliberately throwaway UI. The **capture and verification logic is the real deliverable.**
+**Live:** <https://lufs-recorder-pwa.exe.xyz/>
+
+> **Status:** shipped (v0.3.1). The production surface — a responsive **Rack** (desktop) + **Tap** (mobile) design — is live over the real engine. On-device recording durability (a "voice-memos"-style local library) is **designed and parked** for its own session — see [Roadmap](#roadmap).
 
 ---
 
@@ -21,9 +23,12 @@ It is the **sibling** of the native recorder, not a replacement. The native tool
 ## Architecture — engine vs surface
 
 All capture, verification, DSP, MIDI note-resolution, and synth playback live in `window.LUFSRec`
-(in `index.html`). The DOM/CSS is a **throwaway reference UI**; the production design binds to the
-engine's data + transport contract in [`docs/SURFACE-CONTRACT.md`](docs/SURFACE-CONTRACT.md) and never
-forks engine logic. Pure helpers (note resolution, peaks, verification, LUFS) are node-unit-tested.
+(in `index.html`) — the engine is the product. The **production surface** (Rack + Tap) is a separate
+layer that binds to the engine's data + transport contract in
+[`docs/SURFACE-CONTRACT.md`](docs/SURFACE-CONTRACT.md) and never forks engine logic; the same seam
+governs any future surface (e.g. a recordings Library). Pure helpers (note resolution, peaks,
+verification, LUFS) are node-unit-tested. The whole app is still **one self-contained `index.html`** —
+that packaged simplicity is a feature, and the bar any new work has to clear.
 
 ## Verification is honest
 
@@ -67,12 +72,14 @@ It's static — host it anywhere that serves over https:
 `deploy` / root. On every push to `main`, CI runs verify → package → retain → publishes the verified
 output to the `deploy` branch. A red verify never ships.
 
-**Quickest:** Pages → **Deploy from a branch** → `main` / `/ (root)`. Live at
-`https://danialrami.github.io/lufs-recorder-pwa/`, no build step — but the verify gate doesn't block
-this path, so prefer the `deploy` branch for anything real.
+**Quickest:** Pages → **Deploy from a branch** → `main` / `/ (root)`, no build step — but the verify
+gate doesn't block this path, so prefer the `deploy` branch for anything real.
 
-Any static host works (Cloudflare Pages, Hostinger, Netlify, an S3/R2 bucket behind https) — serve the
-`deploy` branch (or the repo root). See the `hosting-provider-static-deploy` skill.
+The production site currently runs on **exe.dev** at <https://lufs-recorder-pwa.exe.xyz/>. Because every
+asset path is relative and there are zero external origins, the same bytes serve unchanged from any
+static host (exe.dev, Cloudflare Pages, GitHub Pages, Hostinger, Netlify, an S3/R2 bucket behind https)
+— serve the `deploy` branch or the repo root. See the `hosting-provider-static-deploy` skill and
+[`agent-knowledge` → `docs/infra/website-portability`].
 
 ## Browser support — the real constraints
 
@@ -90,6 +97,22 @@ Any static host works (Cloudflare Pages, Hostinger, Netlify, an S3/R2 bucket beh
 ## Relationship to the native recorder
 
 Same `take.json` shape, same verification philosophy, different capture backend. The intent is for the verifier and take schema to become **shared code** with the native recorder's TypeScript build so there's a single source of truth for what a verified take *is* — the browser is just another capture adapter feeding that contract.
+
+## Roadmap
+
+The big next step is **on-device recording durability** — keep recordings on the device across
+visits, so this becomes a true "voice-memos"-style local library (with MIDI, which Voice Memos can't
+do). It is **designed and deliberately parked** for its own work session, because doing it right pulls
+in Web Worker / OPFS logic that deserves care and would otherwise creep on the "one self-contained
+page" simplicity that makes this tool appealing.
+
+- **Implementation plan + step-by-step to feature parity:** [`docs/DURABILITY.md`](docs/DURABILITY.md)
+- **Full analysis** (why this architecture, Voice-Memos/competitor feature study, what being a PWA
+  grants vs. its limits and how other music PWAs work around them): the
+  `lufs-recorder-pwa` doc suite in `agent-knowledge` → `docs/product/lufs-recorder-pwa/`.
+
+Nothing about durability is built into `main` yet — the shipped app is capture + verify + playback +
+export, and stays that way until the durability session.
 
 ## License
 
