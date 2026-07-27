@@ -4,7 +4,7 @@ schema_version: 1
 site_id: lufs-recorder-pwa
 canonical_url: https://lufs-recorder-pwa.exe.xyz/
 source:
-  repository: danialrami/lufs-recorder-pwa
+  repository: lufs-audio/lufs-recorder-pwa
   production_ref: main
 build:
   # Tier A — pure static. No build step; the source IS the servable site.
@@ -21,6 +21,11 @@ runtime:
   spa_fallback: false
   max_asset_bytes: 26214400   # 25 MiB (lowest active host: Cloudflare Pages)
 # Servable set — the host-neutral bytes an HTTP server exposes.
+# Generated host adapters, rendered from site/*.yaml by scripts/render-adapters.py.
+adapters:
+  cloudflare_pages:
+    headers: _headers
+    deploy_branch: site
 release:
   include:
     - index.html

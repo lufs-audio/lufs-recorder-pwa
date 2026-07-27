@@ -2,12 +2,17 @@
 # STAGED HERE because the GitHub app token cannot write .github/workflows/.
 # A human/local agent activates it:
 #   git mv ci/deploy.yml .github/workflows/deploy.yml && git commit -m "ci: activate deploy" && git push
-# Then point the host at the `deploy` branch (GitHub Pages: Settings -> Pages ->
-# Deploy from a branch -> deploy / root). Build once -> verify (fail-closed) ->
-# retain off-host -> publish. A red verify never updates `deploy`.
 #
-# SECURITY: pin third-party actions to commit SHAs before this ships as the real deploy
-# (KB policy). @vN tags are shown here for readability only.
+# Tier A pure static: no build. verify (fail-closed) -> package (dist/ + adapters
+# + provenance) -> retain off-host -> publish. A red verify never updates `site`.
+#
+# CLOUDFLARE PAGES SETUP (the intended production edge):
+#   Production branch: site
+#   Build command:     (leave EMPTY)
+#   Output directory:  /
+#   The `site` branch holds the packaged, verified artifact — Pages must NOT
+#   rebuild it (02: a deployment adapter must not compile source again). The
+#   generated _headers file rides along in the artifact and Pages applies it.
 name: deploy
 on:
   push:
@@ -25,24 +30,32 @@ jobs:
   build-verify-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4            # TODO: pin to SHA
-      - uses: actions/setup-python@v5        # TODO: pin to SHA
+      # Third-party actions pinned to commit SHAs (KB 02/08 security policy).
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+      - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
         with:
           python-version: "3.12"
       - name: Verify source artifact (fail-closed)
         run: bash scripts/verify
-      - name: Package release (dist/ + provenance)
+      - name: Package release (dist/ + adapters + provenance)
         run: bash scripts/package
+      - name: Verify the PACKAGED artifact (what actually ships)
+        run: bash scripts/verify dist
       - name: Retain build off-host
-        uses: actions/upload-artifact@v4     # TODO: pin to SHA
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882  # v4.4.3
         with:
           name: lufs-recorder-pwa-dist
           path: dist/
           retention-days: 30
-      - name: Publish verified output to deploy branch
-        uses: peaceiris/actions-gh-pages@v4  # TODO: pin to SHA
+          if-no-files-found: error
+      - name: Publish verified output to the site branch
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e  # v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: deploy
+          publish_branch: site
           commit_message: "deploy: ${{ github.sha }}"
+
+# ROLLBACK (KB rule 7): re-run from a known-good SHA (Actions -> Run workflow), or revert
+# the `site` branch to its previous deploy commit. Never rebuild old source and call it a
+# rollback — redeploy the retained good build.
