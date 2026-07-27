@@ -13,6 +13,9 @@ SITE_ID=lufs-recorder-pwa
 rm -rf "$OUT"; mkdir -p "$OUT/icons"
 for f in "${INCLUDE[@]}"; do mkdir -p "$OUT/$(dirname "$f")"; cp "$f" "$OUT/$f"; done
 
+# Render host adapters FROM the neutral site/ manifests (never hand-written per host).
+python3 scripts/render-adapters.py "$OUT" site
+
 # Fail-closed verify against the assembled artifact; write the machine-readable report.
 if scripts/verify "$OUT" > "$OUT/.verify.log" 2>&1; then VSTATUS=passed; else VSTATUS=failed; fi
 python3 - "$OUT" "$VSTATUS" > "$OUT/verification.json" <<'PY'

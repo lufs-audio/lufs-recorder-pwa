@@ -22,12 +22,20 @@ for f in "${REQUIRED[@]}"; do
 done
 
 # 2. HTML entry points parse (doctype + closing tag) and carry the content marker
+# NB every file read below is guarded with `[ -f ]`. Under `set -e`, a redirect
+# from a missing file aborts the whole script — which previously meant one
+# absent asset skipped every remaining check and never printed the summary. A
+# verifier that stops early is a verifier that lies about coverage.
 for f in index.html 404.html; do
-  if grep -qi '<!doctype html>' "$DIR/$f" && grep -qi '</html>' "$DIR/$f"; then pass "html well-formed: $f"; else bad "html not well-formed: $f"; fi
+  if [ ! -f "$DIR/$f" ]; then bad "html missing: $f"
+  elif grep -qi '<!doctype html>' "$DIR/$f" && grep -qi '</html>' "$DIR/$f"; then pass "html well-formed: $f"
+  else bad "html not well-formed: $f"; fi
 done
-if grep -q "$MARKER" "$DIR/index.html"; then pass "content marker present: $MARKER"; else bad "content marker missing: $MARKER"; fi
+if [ -f "$DIR/index.html" ] && grep -q "$MARKER" "$DIR/index.html"; then pass "content marker present: $MARKER"
+else bad "content marker missing: $MARKER"; fi
 
 # 3. manifest is valid JSON with required keys, and start_url/scope are relative
+if [ ! -f "$DIR/manifest.webmanifest" ]; then bad "manifest missing"; else
 python3 - "$DIR/manifest.webmanifest" <<'PY' && pass "manifest valid + relative" || bad "manifest invalid"
 import json,sys
 m=json.load(open(sys.argv[1]))
@@ -36,9 +44,11 @@ assert m.get("icons"), "icons"
 assert str(m.get("start_url","")).startswith("."), "start_url must be relative"
 assert str(m.get("scope","./")).startswith("."), "scope must be relative"
 PY
+fi
 
 # 4. service worker bumps a cache name (stale-logic guard)
-if grep -qE "const CACHE\s*=\s*'lufs-rec-v[0-9]" "$DIR/sw.js"; then pass "sw cache versioned"; else bad "sw.js missing versioned CACHE const"; fi
+if [ -f "$DIR/sw.js" ] && grep -qE "const CACHE\s*=\s*'lufs-rec-v[0-9]" "$DIR/sw.js"; then pass "sw cache versioned"
+else bad "sw.js missing versioned CACHE const"; fi
 
 # 5. zero external origins (matches site/external-origins.yaml). No network calls, no absolute-root asset refs.
 if grep -nE 'fetch\(|XMLHttpRequest|EventSource|(src|href)="https?:|url\(https?:' "$DIR/index.html" >/dev/null 2>&1; then
@@ -52,9 +62,33 @@ if grep -rnE 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|(api_?key|s
 
 # 7. no asset exceeds the lowest host's per-file limit
 for f in "${REQUIRED[@]}"; do
+  if [ ! -f "$DIR/$f" ]; then bad "size unknown (missing): $f"; continue; fi
   sz=$(wc -c < "$DIR/$f" | tr -d ' ')
   if [ "$sz" -le "$MAX_BYTES" ]; then pass "size ok ($sz b): $f"; else bad "over $MAX_BYTES b: $f"; fi
 done
+
+# 8. every route declared in site/routes.txt is backed by a real file. The
+# neutral manifest is the contract; a route listed there with nothing behind it
+# is a 404 waiting to happen on whichever host we move to next.
+if [ -f site/routes.txt ]; then
+  rmiss=0
+  while IFS= read -r route; do
+    case "$route" in ""|\#*) continue ;; esac
+    rel="${route#/}"; [ -z "$rel" ] && rel="index.html"
+    [ -f "$DIR/$rel" ] || { bad "declared route has no file: $route"; rmiss=$((rmiss+1)); }
+  done < site/routes.txt
+  [ "$rmiss" -eq 0 ] && pass "all declared routes backed by files"
+else
+  bad "site/routes.txt missing (neutral route manifest is required)"
+fi
+
+# 9. the generated Cloudflare adapter must be present in a packaged artifact.
+# Rendered from site/headers.yaml; if it silently no-ops, the no-cache intent on
+# sw.js never reaches the host and clients pin to stale logic.
+if [ "$DIR" != "." ]; then
+  if [ -s "$DIR/_headers" ] && grep -qE '^/sw\.js$' "$DIR/_headers"; then pass "adapter _headers rendered (sw.js rule present)"
+  else bad "_headers missing or has no /sw.js rule"; fi
+fi
 
 echo
 if [ "$fail" -eq 0 ]; then echo "VERIFY: PASS"; else echo "VERIFY: FAIL ($fail)"; fi
