@@ -1,0 +1,23 @@
+verify: dist
+  ok    exists non-empty: index.html
+  ok    exists non-empty: 404.html
+  ok    exists non-empty: manifest.webmanifest
+  ok    exists non-empty: sw.js
+  ok    exists non-empty: icons/icon.svg
+  ok    html well-formed: index.html
+  ok    html well-formed: 404.html
+  ok    content marker present: lufs-recorder
+  ok    manifest valid + relative
+  ok    sw cache versioned
+  ok    zero external origins in index.html
+  ok    all asset refs relative
+  ok    no secret patterns
+  ok    size ok (60709 b): index.html
+  ok    size ok (865 b): 404.html
+  ok    size ok (670 b): manifest.webmanifest
+  ok    size ok (1487 b): sw.js
+  ok    size ok (1032 b): icons/icon.svg
+  ok    all declared routes backed by files
+  ok    adapter _headers rendered (sw.js rule present)
+
+VERIFY: PASS

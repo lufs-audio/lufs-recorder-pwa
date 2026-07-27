@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "site_id": "lufs-recorder-pwa",
+  "source": {
+    "repository": "lufs-audio/lufs-recorder-pwa",
+    "commit": "e14d2680b9c432e3416ce61180fa0d87c380e8d9"
+  },
+  "build": {
+    "builder": "github-actions",
+    "command": "none (Tier A static)"
+  },
+  "artifact": {
+    "sha256": "7488696f83a1d6bb417479f1a8f06b6497c46774133d1d3c4ac92358bcff95a5",
+    "files": 6,
+    "bytes": 65166
+  },
+  "verification": {
+    "report": "verification.json"
+  }
+}
