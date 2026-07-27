@@ -15,8 +15,11 @@ verify: dist
   ok    size ok (60709 b): index.html
   ok    size ok (865 b): 404.html
   ok    size ok (670 b): manifest.webmanifest
-  ok    size ok (1487 b): sw.js
+  ok    size ok (2605 b): sw.js
   ok    size ok (1032 b): icons/icon.svg
+  ok    sw handles navigations
+  ok    sw shell avoids the redirecting url
+  ok    sw strips the redirect flag
   ok    all declared routes backed by files
   ok    adapter _headers rendered (sw.js rule present)
 

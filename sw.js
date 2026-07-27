@@ -3,10 +3,13 @@
  * The recorder itself is fully client-side; the SW only serves static assets.
  * BUMP CACHE on every release so clients pick up new logic (verified by scripts/verify).
  */
-const CACHE = 'lufs-rec-v0.3.1';
+const CACHE = 'lufs-rec-v0.3.2';
+// The canonical shell URL. Deliberately "./" and never "./index.html":
+// hosts commonly 308 the latter to the former, and a redirected response
+// cannot satisfy a navigation.
+const SHELL_URL = "./";
 const SHELL = [
   './',
-  './index.html',
   './404.html',
   './manifest.webmanifest',
   './icons/icon.svg'
@@ -24,17 +27,44 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+// --- navigation handling -----------------------------------------------------
+// Navigation requests use redirect mode "manual": the browser rejects any
+// response whose .redirected is true as a network error (ERR_FAILED). Cloudflare
+// Pages 308-redirects /index.html -> /, and a redirected response STAYS flagged
+// even after being stored in the Cache API (w3c/ServiceWorker#737) — so both the
+// network path and a naive cache hit produce one. Hence: precache "./" (a clean
+// 200) and strip the flag defensively before responding.
+async function cleanRedirect(res) {
+  if (!res || !res.redirected) return res;
+  const body = await res.clone().blob();
+  return new Response(body, {
+    status: res.status,
+    statusText: res.statusText,
+    headers: res.headers,
+  });
+}
+
+async function handleNavigation() {
+  const cached = await caches.match(SHELL_URL);
+  if (cached) return cleanRedirect(cached);
+  try {
+    return await cleanRedirect(await fetch(SHELL_URL));
+  } catch (err) {
+    const fallback = await caches.match(SHELL_URL);
+    if (fallback) return cleanRedirect(fallback);
+    throw err;
+  }
+}
+
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
 
-  // Navigations: serve the app shell, fall back to network, then offline shell.
   if (req.mode === 'navigate') {
-    e.respondWith(
-      caches.match('./index.html').then((cached) => cached || fetch(req).catch(() => caches.match('./index.html')))
-    );
+    e.respondWith(handleNavigation());
     return;
   }
+
 
   // Static assets: cache-first, populate on miss.
   e.respondWith(
