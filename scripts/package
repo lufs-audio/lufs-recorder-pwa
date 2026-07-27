@@ -17,12 +17,47 @@ for f in "${INCLUDE[@]}"; do mkdir -p "$OUT/$(dirname "$f")"; cp "$f" "$OUT/$f";
 python3 scripts/render-adapters.py "$OUT" site
 
 # Fail-closed verify against the assembled artifact; write the machine-readable report.
-if scripts/verify "$OUT" > "$OUT/.verify.log" 2>&1; then VSTATUS=passed; else VSTATUS=failed; fi
-python3 - "$OUT" "$VSTATUS" > "$OUT/verification.json" <<'PY'
+#
+# Invoke through `bash` rather than as an executable: git blobs created via the
+# GitHub API are mode 100644, so a direct `scripts/verify` call dies with
+# "Permission denied" on a fresh clone. Sourcing the interpreter explicitly makes
+# this independent of the file mode.
+#
+# Three outcomes, deliberately distinct — "the verifier could not run" must never
+# be reported as "the artifact failed verification". Conflating them is the same
+# lie this verifier exists to remove: one is an unproven artifact, the other is a
+# disproven one, and only the second tells you the bytes are wrong.
+set +e
+bash scripts/verify "$OUT" > "$OUT/.verify.log" 2>&1
+rc=$?
+set -e
+case "$rc" in
+  0) VSTATUS=passed ;;
+  1) VSTATUS=failed ;;          # checks ran, artifact is bad
+  *) VSTATUS=errored ;;         # verifier itself could not run (missing, not readable, crashed)
+esac
+
+python3 - "$OUT" "$VSTATUS" "$rc" > "$OUT/verification.json" <<'PY'
 import json,sys
-out,status=sys.argv[1],sys.argv[2]
-print(json.dumps({"schema_version":1,"status":status,"log":".verify.log"},indent=2))
+out,status,rc=sys.argv[1],sys.argv[2],int(sys.argv[3])
+print(json.dumps({
+  "schema_version":1,
+  "status":status,
+  "verifier_exit_code":rc,
+  "meaning":{
+    "passed":"every check ran and passed",
+    "failed":"checks ran; the artifact violated the contract",
+    "errored":"the verifier could not run — the artifact is UNPROVEN, not proven bad",
+  }[status],
+  "log":".verify.log",
+},indent=2))
 PY
+
+if [ "$VSTATUS" = errored ]; then
+  echo "FATAL: the verifier could not run (exit $rc). The artifact is UNPROVEN." >&2
+  echo "----- $OUT/.verify.log -----" >&2
+  cat "$OUT/.verify.log" >&2
+fi
 
 # Digests for every servable file.
 ( cd "$OUT" && find . -type f ! -name SHA256SUMS ! -name artifact.json ! -name verification.json ! -name .verify.log \
@@ -40,7 +75,7 @@ sums=open(os.path.join(out,"SHA256SUMS"),"rb").read()
 digest=hashlib.sha256(sums).hexdigest()
 print(json.dumps({
   "schema_version":1,"site_id":site_id,
-  "source":{"repository":"danialrami/lufs-recorder-pwa","commit":commit},
+  "source":{"repository":"lufs-audio/lufs-recorder-pwa","commit":commit},
   "build":{"builder":os.environ.get("GITHUB_ACTIONS") and "github-actions" or "local","command":"none (Tier A static)"},
   "artifact":{"sha256":digest,"files":len(files),"bytes":total},
   "verification":{"report":"verification.json"}
