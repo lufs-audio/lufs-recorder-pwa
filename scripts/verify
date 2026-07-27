@@ -67,6 +67,21 @@ for f in "${REQUIRED[@]}"; do
   if [ "$sz" -le "$MAX_BYTES" ]; then pass "size ok ($sz b): $f"; else bad "over $MAX_BYTES b: $f"; fi
 done
 
+# 7b. service-worker navigation safety. Navigation requests use redirect mode
+# "manual", so a response with .redirected set is rejected by the browser
+# (ERR_FAILED). Cloudflare Pages 308s /index.html -> /, and the redirected flag
+# SURVIVES storage in the Cache API (w3c/ServiceWorker#737) — so precaching that
+# URL poisons the cached shell as well as the network path. Require: a navigate
+# branch, no ./index.html in SHELL, and a redirect-stripping rebuild.
+if [ -f "$DIR/sw.js" ]; then
+  grep -qE "mode === '(navigate)'" "$DIR/sw.js" && pass "sw handles navigations" || bad "sw.js has no navigate branch"
+  if sed -n '/const SHELL = \[/,/\]/p' "$DIR/sw.js" | grep -q "index.html"; then
+    bad "sw SHELL precaches ./index.html (host 308s it; cached response stays redirect-flagged)"
+  else pass "sw shell avoids the redirecting url"; fi
+  grep -q '\.redirected' "$DIR/sw.js" && grep -q 'new Response(' "$DIR/sw.js" \
+    && pass "sw strips the redirect flag" || bad "sw does not rebuild redirected responses"
+else bad "sw.js missing"; fi
+
 # 8. every route declared in site/routes.txt is backed by a real file. The
 # neutral manifest is the contract; a route listed there with nothing behind it
 # is a 404 waiting to happen on whichever host we move to next.
