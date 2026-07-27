@@ -2,7 +2,7 @@
 # Target-independent source of truth. No secrets. Hosts are swappable adapters.
 schema_version: 1
 site_id: lufs-recorder-pwa
-canonical_url: https://lufs-recorder-pwa.exe.xyz/
+canonical_url: https://recorder.lufs.audio
 source:
   repository: lufs-audio/lufs-recorder-pwa
   production_ref: main
@@ -45,7 +45,8 @@ routes:
     - /icons/icon.svg
 external_origins: []          # fully self-contained: zero external origins, zero network calls
 domains:
-  - lufs-recorder-pwa.exe.xyz   # current production host (exe.dev); swappable — relative paths, zero external origins
+  - recorder.lufs.audio         # Cloudflare Pages (production)
+  - lufs-recorder-pwa.exe.xyz   # legacy exe.dev host — keep until the Pages cutover has soaked (KB rule 7: retain old infra)
 verification:
   content_probe: /index.html
   content_marker: "lufs-recorder"
