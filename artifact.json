@@ -3,16 +3,16 @@
   "site_id": "lufs-recorder-pwa",
   "source": {
     "repository": "lufs-audio/lufs-recorder-pwa",
-    "commit": "349d01ba4bf9b9164b3208c97d7149ea336e08c7"
+    "commit": "e01be423edce05e8ca97110050a680278e603907"
   },
   "build": {
     "builder": "github-actions",
     "command": "none (Tier A static)"
   },
   "artifact": {
-    "sha256": "7f6a6d5a239e8ad60f110b5b4949f4a4d5e4d70cf5f6e9c1cbec86c2d12545eb",
+    "sha256": "561c98e23d34c358af1813efed2ca59cbeee775b8c82670403c49bab4a5ce3b9",
     "files": 6,
-    "bytes": 66284
+    "bytes": 66825
   },
   "verification": {
     "report": "verification.json"

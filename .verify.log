@@ -9,13 +9,16 @@ verify: dist
   ok    content marker present: lufs-recorder
   ok    manifest valid + relative
   ok    sw cache versioned
-  ok    zero external origins in index.html
+        found: ['https://umami.lufshq.com']
+        declared: ['https://umami.lufshq.com']
+  ok    external-origin resource refs all declared
+  ok    no runtime network calls (fetch/XHR/EventSource) in index.html
   ok    all asset refs relative
   ok    no secret patterns
-  ok    size ok (60709 b): index.html
+  ok    size ok (60970 b): index.html
   ok    size ok (865 b): 404.html
   ok    size ok (670 b): manifest.webmanifest
-  ok    size ok (2605 b): sw.js
+  ok    size ok (2885 b): sw.js
   ok    size ok (1032 b): icons/icon.svg
   ok    sw handles navigations
   ok    sw shell avoids the redirecting url
