@@ -1,1 +1,166 @@
-IyEvdXNyL2Jpbi9lbnYgYmFzaAojIGx1ZnMtcmVjb3JkZXItcHdhIOKAlCBmYWlsLWNsb3NlZCBhcnRpZmFjdCB2ZXJpZmllci4KIyAiRXhpdCAwIGlzIG5vdCBlbm91Z2giOiBwcm92ZSB0aGUgc2VydmFibGUgYnl0ZXMgYXJlIGNvcnJlY3QgYmVmb3JlIHRoZXkgc2hpcC4KIyBBbGlnbmVkIHRvIGFnZW50LWtub3dsZWRnZSBkb2NzL2luZnJhL3dlYnNpdGUtcG9ydGFiaWxpdHkgKFJlcXVpcmVkIHZlcmlmaWNhdGlvbikuCiMgVXNhZ2U6IHNjcmlwdHMvdmVyaWZ5IFtESVJdICAgKERJUiBkZWZhdWx0cyB0byByZXBvIHJvb3QpCnNldCAtZXVvIHBpcGVmYWlsCgpESVI9IiR7MTotLn0iCk1BUktFUj0ibHVmcy1yZWNvcmRlciIKTUFYX0JZVEVTPTI2MjE0NDAwICAgIyAyNSBNaUIgKHNpdGUueWFtbCBydW50aW1lLm1heF9hc3NldF9ieXRlcykKUkVRVUlSRUQ9KGluZGV4Lmh0bWwgNDA0Lmh0bWwgbWFuaWZlc3Qud2VibWFuaWZlc3Qgc3cuanMgaWNvbnMvaWNvbi5zdmcpCgpmYWlsPTAKcGFzcygpeyBwcmludGYgJyAgb2sgICAgJXNcbicgIiQxIjsgfQpiYWQoKXsgIHByaW50ZiAnICBGQUlMICAlc1xuJyAiJDEiOyBmYWlsPSQoKGZhaWwrMSkpOyB9CgplY2hvICJ2ZXJpZnk6ICRESVIiCgojIDEuIHJlcXVpcmVkIGZpbGVzIGV4aXN0IGFuZCBhcmUgbm9uLWVtcHR5CmZvciBmIGluICIke1JFUVVJUkVEW0BdfSI7IGRvCiAgaWYgWyAtcyAiJERJUi8kZiIgXTsgdGhlbiBwYXNzICJleGlzdHMgbm9uLWVtcHR5OiAkZiI7IGVsc2UgYmFkICJtaXNzaW5nL2VtcHR5OiAkZiI7IGZpCmRvbmUKCiMgMi4gSFRNTCBlbnRyeSBwb2ludHMgcGFyc2UgKGRvY3R5cGUgKyBjbG9zaW5nIHRhZykgYW5kIGNhcnJ5IHRoZSBjb250ZW50IG1hcmtlcgojIE5CIGV2ZXJ5IGZpbGUgcmVhZCBiZWxvdyBpcyBndWFyZGVkIHdpdGggYFsgLWYgXWAuIFVuZGVyIGBzZXQgLWVgLCBhIHJlZGlyZWN0CiMgZnJvbSBhIG1pc3NpbmcgZmlsZSBhYm9ydHMgdGhlIHdob2xlIHNjcmlwdCDigJQgd2hpY2ggcHJldmlvdXNseSBtZWFudCBvbmUKIyBhYnNlbnQgYXNzZXQgc2tpcHBlZCBldmVyeSByZW1haW5pbmcgY2hlY2sgYW5kIG5ldmVyIHByaW50ZWQgdGhlIHN1bW1hcnkuIEEKIyB2ZXJpZmllciB0aGF0IHN0b3BzIGVhcmx5IGlzIGEgdmVyaWZpZXIgdGhhdCBsaWVzIGFib3V0IGNvdmVyYWdlLgpmb3IgZiBpbiBpbmRleC5odG1sIDQwNC5odG1sOyBkbwogIGlmIFsgISAtZiAiJERJUi8kZiIgXTsgdGhlbiBiYWQgImh0bWwgbWlzc2luZzogJGYiCiAgZWxpZiBncmVwIC1xaSAnPCFkb2N0eXBlIGh0bWw+JyAiJERJUi8kZiIgJiYgZ3JlcCAtcWkgJzwvaHRtbD4nICIkRElSLyRmIjsgdGhlbiBwYXNzICJodG1sIHdlbGwtZm9ybWVkOiAkZiIKICBlbHNlIGJhZCAiaHRtbCBub3Qgd2VsbC1mb3JtZWQ6ICRmIjsgZmkKZG9uZQppZiBbIC1mICIkRElSL2luZGV4Lmh0bWwiIF0gJiYgZ3JlcCAtcSAiJE1BUktFUiIgIiRESVIvaW5kZXguaHRtbCI7IHRoZW4gcGFzcyAiY29udGVudCBtYXJrZXIgcHJlc2VudDogJE1BUktFUiIKZWxzZSBiYWQgImNvbnRlbnQgbWFya2VyIG1pc3Npbmc6ICRNQVJLRVIiOyBmaQoKIyAzLiBtYW5pZmVzdCBpcyB2YWxpZCBKU09OIHdpdGggcmVxdWlyZWQga2V5cywgYW5kIHN0YXJ0X3VybC9zY29wZSBhcmUgcmVsYXRpdmUKaWYgWyAhIC1mICIkRElSL21hbmlmZXN0LndlYm1hbmlmZXN0IiBdOyB0aGVuIGJhZCAibWFuaWZlc3QgbWlzc2luZyI7IGVsc2UKcHl0aG9uMyAtICIkRElSL21hbmlmZXN0LndlYm1hbmlmZXN0IiA8PCdQWScgJiYgcGFzcyAibWFuaWZlc3QgdmFsaWQgKyByZWxhdGl2ZSIgfHwgYmFkICJtYW5pZmVzdCBpbnZhbGlkIgppbXBvcnQganNvbixzeXMKbT1qc29uLmxvYWQob3BlbihzeXMuYXJndlsxXSkpCmFzc2VydCBtLmdldCgibmFtZSIpLCAibmFtZSIKYXNzZXJ0IG0uZ2V0KCJpY29ucyIpLCAiaWNvbnMiCmFzc2VydCBzdHIobS5nZXQoInN0YXJ0X3VybCIsIiIpKS5zdGFydHN3aXRoKCIuIiksICJzdGFydF91cmwgbXVzdCBiZSByZWxhdGl2ZSIKYXNzZXJ0IHN0cihtLmdldCgic2NvcGUiLCIuLyIpKS5zdGFydHN3aXRoKCIuIiksICJzY29wZSBtdXN0IGJlIHJlbGF0aXZlIgpQWQpmaQoKIyA0LiBzZXJ2aWNlIHdvcmtlciBidW1wcyBhIGNhY2hlIG5hbWUgKHN0YWxlLWxvZ2ljIGd1YXJkKQppZiBbIC1mICIkRElSL3N3LmpzIiBdICYmIGdyZXAgLXFFICJjb25zdCBDQUNIRVxzKj1ccyonbHVmcy1yZWMtdlswLTldIiAiJERJUi9zdy5qcyI7IHRoZW4gcGFzcyAic3cgY2FjaGUgdmVyc2lvbmVkIgplbHNlIGJhZCAic3cuanMgbWlzc2luZyB2ZXJzaW9uZWQgQ0FDSEUgY29uc3QiOyBmaQoKIyA1LiBkZWNsYXJlZC1vcmlnaW5zIGdhdGUgKHNpdGUvZXh0ZXJuYWwtb3JpZ2lucy55YW1sIGlzIHRoZSBzaW5nbGUgc291cmNlIG9mIHRydXRoKS4KIyBFeHRyYWN0IGV2ZXJ5IGFic29sdXRlLVVSTCByZXNvdXJjZSByZWZlcmVuY2UgZnJvbSBpbmRleC5odG1sLCByZWR1Y2UgZWFjaCB0byBpdHMKIyBzY2hlbWU6Ly9ob3N0IG9yaWdpbiwgYW5kIGZhaWwgb24gYW55IG9yaWdpbiBub3QgZGVjbGFyZWQgaW4gdGhlIFlBTUwgbGlzdC4KIyBSdW50aW1lIG5ldHdvcmstY2FsbCBwYXR0ZXJucyAoZmV0Y2gvWEhSL0V2ZW50U291cmNlKSBhcmUgY2hlY2tlZCBzZXBhcmF0ZWx5IOKAlAojIHRob3NlIGFyZSBhIGRpc3RpbmN0IGNsYWltIChubyBkeW5hbWljIGNhbGxzKSBmcm9tIHN1YnJlc291cmNlIGRlY2xhcmF0aW9ucy4KcHl0aG9uMyAtICIkRElSL2luZGV4Lmh0bWwiICJzaXRlL2V4dGVybmFsLW9yaWdpbnMueWFtbCIgPDwgJ1BZJwppbXBvcnQgc3lzLCByZSwgb3MKCmh0bWxfcGF0aCwgeWFtbF9wYXRoID0gc3lzLmFyZ3ZbMV0sIHN5cy5hcmd2WzJdCmh0bWwgPSBvcGVuKGh0bWxfcGF0aCwgZW5jb2Rpbmc9InV0Zi04IikucmVhZCgpCgojIFBhcnNlIGRlY2xhcmVkIG9yaWdpbnMgZnJvbSBleHRlcm5hbC1vcmlnaW5zLnlhbWwgKHN0ZGxpYiBvbmx5LCBmaXhlZCBzdWJzZXQpLgpkZWNsYXJlZCA9IHNldCgpCmlmIG9zLnBhdGguZXhpc3RzKHlhbWxfcGF0aCk6CiAgICBmb3IgbGluZSBpbiBvcGVuKHlhbWxfcGF0aCwgZW5jb2Rpbmc9InV0Zi04Iik6CiAgICAgICAgbSA9IHJlLm1hdGNoKHIiXHMqLVxzKnVybDpccyooXFMrKSIsIGxpbmUpCiAgICAgICAgaWYgbToKICAgICAgICAgICAgdXJsID0gbS5ncm91cCgxKS5zdHJpcCgiJ1wiIikKICAgICAgICAgICAgIyBSZWR1Y2UgdG8gc2NoZW1lOi8vaG9zdAogICAgICAgICAgICBwYXJ0cyA9IHJlLm1hdGNoKHIiKGh0dHBzPzovL1teL10rKSIsIHVybCkKICAgICAgICAgICAgaWYgcGFydHM6CiAgICAgICAgICAgICAgICBkZWNsYXJlZC5hZGQocGFydHMuZ3JvdXAoMSkpCgojIEV4dHJhY3QgcmVzb3VyY2UtcmVmZXJlbmNlIGFic29sdXRlIFVSTHM6IHNyYz0iaHR0cHM6Ly8uLi4iLCBocmVmPSJodHRwczovLy4uLiIsIHVybChodHRwczovLy4uLikKZm91bmRfdXJscyA9IHJlLmZpbmRhbGwocicoPzpzcmN8aHJlZik9WyJceDI3XShodHRwcz86Ly9bXiJceDI3XHNdKylbIlx4MjddJywgaHRtbCkKZm91bmRfdXJscyArPSByZS5maW5kYWxsKHIndXJsXCgoaHR0cHM/Oi8vW14pXHNdKylcKScsIGh0bWwpCmZvdW5kX29yaWdpbnMgPSB7cmUubWF0Y2gociIoaHR0cHM/Oi8vW14vXSspIiwgdSkuZ3JvdXAoMSkgZm9yIHUgaW4gZm91bmRfdXJscyBpZiByZS5tYXRjaChyIihodHRwcz86Ly9bXi9dKykiLCB1KX0KCnVuZGVjbGFyZWQgPSBmb3VuZF9vcmlnaW5zIC0gZGVjbGFyZWQKaWYgdW5kZWNsYXJlZDoKICAgIHN5cy5zdGRlcnIud3JpdGUoIiAgRkFJTCAgdW5kZWNsYXJlZCBleHRlcm5hbCBvcmlnaW5zIGluIGluZGV4Lmh0bWw6ICVzIChkZWNsYXJlZDogJXMpXG4iCiAgICAgICAgICAgICAgICAgICAgICUgKHNvcnRlZCh1bmRlY2xhcmVkKSwgc29ydGVkKGRlY2xhcmVkKSkpCiAgICBzeXMuZXhpdCgxKQplbHNlOgogICAgcHJpbnQoIiAgb2sgICAgZXh0ZXJuYWwtb3JpZ2luIHJlc291cmNlIHJlZnMgbWF0Y2ggZGVjbGFyYXRpb24iCiAgICAgICAgICAiIChmb3VuZDogJXM7IGRlY2xhcmVkOiAlcykiICUgKHNvcnRlZChmb3VuZF9vcmlnaW5zKSwgc29ydGVkKGRlY2xhcmVkKSkpClBZCmlmIFsgJD8gLW5lIDAgXTsgdGhlbiBmYWlsPSQoKGZhaWwrMSkpOyBmaQoKIyBSdW50aW1lIG5ldHdvcmsgY2FsbHMgYXJlIGEgc2VwYXJhdGUsIHVuY29uZGl0aW9uYWwgY2hlY2sg4oCUIHRoZSByZWNvcmRlciBtYWtlcyBub25lLgppZiBncmVwIC1uRSAnZmV0Y2hcKHxYTUxIdHRwUmVxdWVzdHxFdmVudFNvdXJjZScgIiRESVIvaW5kZXguaHRtbCIgPi9kZXYvbnVsbCAyPiYxOyB0aGVuCiAgYmFkICJydW50aW1lIG5ldHdvcmsgY2FsbCAoZmV0Y2gvWEhSL0V2ZW50U291cmNlKSBpbiBpbmRleC5odG1sIOKAlCB0aGUgcmVjb3JkZXIgbWFrZXMgbm9uZSIKICBncmVwIC1uRSAnZmV0Y2hcKHxYTUxIdHRwUmVxdWVzdHxFdmVudFNvdXJjZScgIiRESVIvaW5kZXguaHRtbCIgfCBoZWFkIC01CmVsc2UgcGFzcyAibm8gcnVudGltZSBuZXR3b3JrIGNhbGxzIChmZXRjaC9YSFIvRXZlbnRTb3VyY2UpIGluIGluZGV4Lmh0bWwiOyBmaQoKaWYgZ3JlcCAtbkUgJyhzcmN8aHJlZik9Ii8nICIkRElSL2luZGV4Lmh0bWwiID4vZGV2L251bGwgMj4mMTsgdGhlbiBiYWQgImFic29sdXRlLXJvb3QgYXNzZXQgcmVmIChicmVha3Mgc3VicGF0aCBob3N0aW5nKSI7IGVsc2UgcGFzcyAiYWxsIGFzc2V0IHJlZnMgcmVsYXRpdmUiOyBmaQoKIyA2LiBubyBzZWNyZXQtcGF0dGVybiBtYXRlcmlhbCBzaGlwcGVkCmlmIGdyZXAgLXJuRSAnQkVHSU4gKFJTQSB8RUMgfE9QRU5TU0ggKT9QUklWQVRFIEtFWXxBS0lBWzAtOUEtWl17MTZ9fChhcGlfP2tleXxzZWNyZXR8cGFzc3dvcmQpXHMqWzo9XVxzKlsiJyInIiddW14iJyInIiddezgsfScgIiRESVIvaW5kZXguaHRtbCIgIiRESVIvc3cuanMiID4vZGV2L251bGwgMj4mMTsgdGhlbgogIGJhZCAicG9zc2libGUgc2VjcmV0IG1hdGVyaWFsIGluIHNoaXBwZWQgYXNzZXRzIjsgZWxzZSBwYXNzICJubyBzZWNyZXQgcGF0dGVybnMiOyBmaQoKIyA3LiBubyBhc3NldCBleGNlZWRzIHRoZSBsb3dlc3QgaG9zdCdzIHBlci1maWxlIGxpbWl0CmZvciBmIGluICIke1JFUVVJUkVEW0BdfSI7IGRvCiAgaWYgWyAhIC1mICIkRElSLyRmIiBdOyB0aGVuIGJhZCAic2l6ZSB1bmtub3duIChtaXNzaW5nKTogJGYiOyBjb250aW51ZTsgZmkKICBzej0kKHdjIC1jIDwgIiRESVIvJGYiIHwgdHIgLWQgJyAnKQogIGlmIFsgIiRzeiIgLWxlICIkTUFYX0JZVEVTIiBdOyB0aGVuIHBhc3MgInNpemUgb2sgKCRzeiBiKTogJGYiOyBlbHNlIGJhZCAib3ZlciAkTUFYX0JZVEVTIGI6ICRmIjsgZmkKZG9uZQoKIyA3Yi4gc2VydmljZS13b3JrZXIgbmF2aWdhdGlvbiBzYWZldHkuIE5hdmlnYXRpb24gcmVxdWVzdHMgdXNlIHJlZGlyZWN0IG1vZGUKIyAibWFudWFsIiwgc28gYSByZXNwb25zZSB3aXRoIC5yZWRpcmVjdGVkIHNldCBpcyByZWplY3RlZCBieSB0aGUgYnJvd3NlcgojIChFUlJfRkFJTEVEKS4gQ2xvdWRmbGFyZSBQYWdlcyAzMDhzIC9pbmRleC5odG1sIC0+IC8sIGFuZCB0aGUgcmVkaXJlY3RlZCBmbGFnCiMgU1VSVklWRVMgc3RvcmFnZSBpbiB0aGUgQ2FjaGUgQVBJICh3M2MvU2VydmljZVdvcmtlciM3MzcpIOKAlCBzbyBwcmVjYWNoaW5nIHRoYXQKIyBVUkwgcG9pc29ucyB0aGUgY2FjaGVkIHNoZWxsIGFzIHdlbGwgYXMgdGhlIG5ldHdvcmsgcGF0aC4gUmVxdWlyZTogYSBuYXZpZ2F0ZQojIGJyYW5jaCwgbm8gLi9pbmRleC5odG1sIGluIFNIRUxMLCBhbmQgYSByZWRpcmVjdC1zdHJpcHBpbmcgcmVidWlsZC4KaWYgWyAtZiAiJERJUi9zdy5qcyIgXTsgdGhlbgogIGdyZXAgLXFFICJtb2RlID09PSAnKG5hdmlnYXRlKSciICIkRElSL3N3LmpzIiAmJiBwYXNzICJzdyBoYW5kbGVzIG5hdmlnYXRpb25zIiB8fCBiYWQgInN3LmpzIGhhcyBubyBuYXZpZ2F0ZSBicmFuY2giCiAgaWYgc2VkIC1uICcvY29uc3QgU0hFTEwgPSBcWy8sL1xdL3AnICIkRElSL3N3LmpzIiB8IGdyZXAgLXEgImluZGV4Lmh0bWwiOyB0aGVuCiAgICBiYWQgInN3IFNIRUxMIHByZWNhY2hlcyAuL2luZGV4Lmh0bWwgKGhvc3QgMzA4cyBpdDsgY2FjaGVkIHJlc3BvbnNlIHN0YXlzIHJlZGlyZWN0LWZsYWdnZWQpIgogIGVsc2UgcGFzcyAic3cgc2hlbGwgYXZvaWRzIHRoZSByZWRpcmVjdGluZyB1cmwiOyBmaQogIGdyZXAgLXEgJ1wucmVkaXJlY3RlZCcgIiRESVIvc3cuanMiICYmIGdyZXAgLXEgJ25ldyBSZXNwb25zZSgnICIkRElSL3N3LmpzIiBcCiAgICAmJiBwYXNzICJzdyBzdHJpcHMgdGhlIHJlZGlyZWN0IGZsYWciIHx8IGJhZCAic3cgZG9lcyBub3QgcmVidWlsZCByZWRpcmVjdGVkIHJlc3BvbnNlcyIKZWxzZSBiYWQgInN3LmpzIG1pc3NpbmciOyBmaQoKIyA4LiBldmVyeSByb3V0ZSBkZWNsYXJlZCBpbiBzaXRlL3JvdXRlcy50eHQgaXMgYmFja2VkIGJ5IGEgcmVhbCBmaWxlLiBUaGUKIyBuZXV0cmFsIG1hbmlmZXN0IGlzIHRoZSBjb250cmFjdDsgYSByb3V0ZSBsaXN0ZWQgdGhlcmUgd2l0aCBub3RoaW5nIGJlaGluZCBpdAojIGlzIGEgNDA0IHdhaXRpbmcgdG8gaGFwcGVuIG9uIHdoaWNoZXZlciBob3N0IHdlIG1vdmUgdG8gbmV4dC4KaWYgWyAtZiBzaXRlL3JvdXRlcy50eHQgXTsgdGhlbgogIHJtaXNzPTAKICB3aGlsZSBJRlM9IHJlYWQgLXIgcm91dGU7IGRvCiAgICBjYXNlICIkcm91dGUiIGluICIifFwjKikgY29udGludWUgOzsgZXNhYwogICAgcmVsPSIke3JvdXRlIy99IjsgWyAteiAiJHJlbCIgXSAmJiByZWw9ImluZGV4Lmh0bWwiCiAgICBbIC1mICIkRElSLyRyZWwiIF0gfHwgeyBiYWQgImRlY2xhcmVkIHJvdXRlIGhhcyBubyBmaWxlOiAkcm91dGUiOyBybWlzcz0kKChybWlzcysxKSk7IH0KICBkb25lIDwgc2l0ZS9yb3V0ZXMudHh0CiAgWyAiJHJtaXNzIiAtZXEgMCBdICYmIHBhc3MgImFsbCBkZWNsYXJlZCByb3V0ZXMgYmFja2VkIGJ5IGZpbGVzIgplbHNlCiAgYmFkICJzaXRlL3JvdXRlcy50eHQgbWlzc2luZyAobmV1dHJhbCByb3V0ZSBtYW5pZmVzdCBpcyByZXF1aXJlZCkiCmZpCgojIDkuIHRoZSBnZW5lcmF0ZWQgQ2xvdWRmbGFyZSBhZGFwdGVyIG11c3QgYmUgcHJlc2VudCBpbiBhIHBhY2thZ2VkIGFydGlmYWN0LgojIFJlbmRlcmVkIGZyb20gc2l0ZS9oZWFkZXJzLnlhbWw7IGlmIGl0IHNpbGVudGx5IG5vLW9wcywgdGhlIG5vLWNhY2hlIGludGVudCBvbgojIHN3LmpzIG5ldmVyIHJlYWNoZXMgdGhlIGhvc3QgYW5kIGNsaWVudHMgcGluIHRvIHN0YWxlIGxvZ2ljLgppZiBbICIkRElSIiAhPSAiLiIgXTsgdGhlbgogIGlmIFsgLXMgIiRESVIvX2hlYWRlcnMiIF0gJiYgZ3JlcCAtcUUgJ14vc3dcLmpzJCcgIiRESVIvX2hlYWRlcnMiOyB0aGVuIHBhc3MgImFkYXB0ZXIgX2hlYWRlcnMgcmVuZGVyZWQgKHN3LmpzIHJ1bGUgcHJlc2VudCkiCiAgZWxzZSBiYWQgIl9oZWFkZXJzIG1pc3Npbmcgb3IgaGFzIG5vIC9zdy5qcyBydWxlIjsgZmkKZmkKCmVjaG8KaWYgWyAiJGZhaWwiIC1lcSAwIF07IHRoZW4gZWNobyAiVkVSSUZZOiBQQVNTIjsgZWxzZSBlY2hvICJWRVJJRlk6IEZBSUwgKCRmYWlsKSI7IGZpClsgIiRmYWlsIiAtZXEgMCBdCg==
+#!/usr/bin/env bash
+# lufs-recorder-pwa — fail-closed artifact verifier.
+# "Exit 0 is not enough": prove the servable bytes are correct before they ship.
+# Aligned to agent-knowledge docs/infra/website-portability (Required verification).
+# Usage: scripts/verify [DIR]   (DIR defaults to repo root)
+set -euo pipefail
+
+DIR="${1:-.}"
+MARKER="lufs-recorder"
+MAX_BYTES=26214400   # 25 MiB (site.yaml runtime.max_asset_bytes)
+REQUIRED=(index.html 404.html manifest.webmanifest sw.js icons/icon.svg)
+
+fail=0
+pass(){ printf '  ok    %s\n' "$1"; }
+bad(){  printf '  FAIL  %s\n' "$1"; fail=$((fail+1)); }
+
+echo "verify: $DIR"
+
+# 1. required files exist and are non-empty
+for f in "${REQUIRED[@]}"; do
+  if [ -s "$DIR/$f" ]; then pass "exists non-empty: $f"; else bad "missing/empty: $f"; fi
+done
+
+# 2. HTML entry points parse (doctype + closing tag) and carry the content marker
+# NB every file read below is guarded with `[ -f ]`. Under `set -e`, a redirect
+# from a missing file aborts the whole script — which previously meant one
+# absent asset skipped every remaining check and never printed the summary. A
+# verifier that stops early is a verifier that lies about coverage.
+for f in index.html 404.html; do
+  if [ ! -f "$DIR/$f" ]; then bad "html missing: $f"
+  elif grep -qi '<!doctype html>' "$DIR/$f" && grep -qi '</html>' "$DIR/$f"; then pass "html well-formed: $f"
+  else bad "html not well-formed: $f"; fi
+done
+if [ -f "$DIR/index.html" ] && grep -q "$MARKER" "$DIR/index.html"; then pass "content marker present: $MARKER"
+else bad "content marker missing: $MARKER"; fi
+
+# 3. manifest is valid JSON with required keys, and start_url/scope are relative
+if [ ! -f "$DIR/manifest.webmanifest" ]; then bad "manifest missing"; else
+python3 - "$DIR/manifest.webmanifest" <<'PY' && pass "manifest valid + relative" || bad "manifest invalid"
+import json,sys
+m=json.load(open(sys.argv[1]))
+assert m.get("name"), "name"
+assert m.get("icons"), "icons"
+assert str(m.get("start_url","")).startswith("."), "start_url must be relative"
+assert str(m.get("scope","./")).startswith("."), "scope must be relative"
+PY
+fi
+
+# 4. service worker bumps a cache name (stale-logic guard)
+if [ -f "$DIR/sw.js" ] && grep -qE "const CACHE\s*=\s*'lufs-rec-v[0-9]" "$DIR/sw.js"; then pass "sw cache versioned"
+else bad "sw.js missing versioned CACHE const"; fi
+
+# 5. declared-origins gate (site/external-origins.yaml is the single source of truth).
+# Extract every absolute-URL resource reference from index.html, reduce each to its
+# scheme://host origin, and fail on any origin not declared in the YAML list. The
+# declaration is the contract; this check must never carry its own hardcoded list.
+# NB guarded with `if ... then/else` on purpose: under `set -e` a bare failing
+# command aborts the run, which skips every later check and never prints the
+# summary — a verifier that stops early is a verifier that lies about coverage.
+ORIGINS_YAML="$(cd "$(dirname "$0")/.." && pwd)/site/external-origins.yaml"
+if python3 - "$DIR/index.html" "$ORIGINS_YAML" <<'PY'
+import sys, re, os
+
+html_path, yaml_path = sys.argv[1], sys.argv[2]
+html = open(html_path, encoding="utf-8").read()
+
+def to_origin(url):
+    m = re.match(r"(https?://[^/]+)", url)
+    return m.group(1) if m else None
+
+# Declared origins. A missing or empty declaration means nothing is allowed, so an
+# undeclared origin still fails: the gate fails closed, never open.
+declared = set()
+if os.path.exists(yaml_path):
+    for line in open(yaml_path, encoding="utf-8"):
+        m = re.match(r"\s*-\s*(?:url:\s*)?(https?://\S+)", line)
+        if m:
+            o = to_origin(m.group(1).strip("'\""))
+            if o:
+                declared.add(o)
+else:
+    sys.stdout.write("        (no external-origins.yaml found; nothing is declared)\n")
+
+# Resource references only. An <a href> a visitor clicks is not a dependency, but
+# src/href on a fetching element, a srcset candidate, and a CSS url() all are.
+found = set()
+for u in re.findall(r'(?:src|href)=["\x27](https?://[^"\x27\s]+)', html):
+    found.add(to_origin(u))
+for attr in re.findall(r'srcset=["\x27]([^"\x27]+)', html):
+    for cand in attr.split(","):
+        cand = cand.strip().split()[0] if cand.strip() else ""
+        if cand.startswith("http"):
+            found.add(to_origin(cand))
+for u in re.findall(r'url\(\s*["\x27]?(https?://[^)"\x27\s]+)', html):
+    found.add(to_origin(u))
+found.discard(None)
+
+sys.stdout.write("        found: %s\n        declared: %s\n" % (sorted(found) or "[]", sorted(declared) or "[]"))
+undeclared = found - declared
+if undeclared:
+    sys.stdout.write("        undeclared: %s\n" % sorted(undeclared))
+    sys.exit(1)
+PY
+then pass "external-origin resource refs all declared"
+else bad "undeclared external origin in index.html (see found/declared above)"; fi
+
+# Runtime network calls are a separate, unconditional claim: the recorder makes none.
+if grep -nE 'fetch\(|XMLHttpRequest|EventSource' "$DIR/index.html" >/dev/null 2>&1; then
+  bad "runtime network call (fetch/XHR/EventSource) in index.html — the recorder makes none"
+  grep -nE 'fetch\(|XMLHttpRequest|EventSource' "$DIR/index.html" | head -5
+else pass "no runtime network calls (fetch/XHR/EventSource) in index.html"; fi
+
+if grep -nE '(src|href)="/' "$DIR/index.html" >/dev/null 2>&1; then bad "absolute-root asset ref (breaks subpath hosting)"; else pass "all asset refs relative"; fi
+
+# 6. no secret-pattern material shipped
+if grep -rnE 'BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|AKIA[0-9A-Z]{16}|(api_?key|secret|password)\s*[:=]\s*["'"'"'][^"'"'"']{8,}' "$DIR/index.html" "$DIR/sw.js" >/dev/null 2>&1; then
+  bad "possible secret material in shipped assets"; else pass "no secret patterns"; fi
+
+# 7. no asset exceeds the lowest host's per-file limit
+for f in "${REQUIRED[@]}"; do
+  if [ ! -f "$DIR/$f" ]; then bad "size unknown (missing): $f"; continue; fi
+  sz=$(wc -c < "$DIR/$f" | tr -d ' ')
+  if [ "$sz" -le "$MAX_BYTES" ]; then pass "size ok ($sz b): $f"; else bad "over $MAX_BYTES b: $f"; fi
+done
+
+# 7b. service-worker navigation safety. Navigation requests use redirect mode
+# "manual", so a response with .redirected set is rejected by the browser
+# (ERR_FAILED). Cloudflare Pages 308s /index.html -> /, and the redirected flag
+# SURVIVES storage in the Cache API (w3c/ServiceWorker#737) — so precaching that
+# URL poisons the cached shell as well as the network path. Require: a navigate
+# branch, no ./index.html in SHELL, and a redirect-stripping rebuild.
+if [ -f "$DIR/sw.js" ]; then
+  grep -qE "mode === '(navigate)'" "$DIR/sw.js" && pass "sw handles navigations" || bad "sw.js has no navigate branch"
+  if sed -n '/const SHELL = \[/,/\]/p' "$DIR/sw.js" | grep -q "index.html"; then
+    bad "sw SHELL precaches ./index.html (host 308s it; cached response stays redirect-flagged)"
+  else pass "sw shell avoids the redirecting url"; fi
+  grep -q '\.redirected' "$DIR/sw.js" && grep -q 'new Response(' "$DIR/sw.js" \
+    && pass "sw strips the redirect flag" || bad "sw does not rebuild redirected responses"
+else bad "sw.js missing"; fi
+
+# 8. every route declared in site/routes.txt is backed by a real file. The
+# neutral manifest is the contract; a route listed there with nothing behind it
+# is a 404 waiting to happen on whichever host we move to next.
+if [ -f site/routes.txt ]; then
+  rmiss=0
+  while IFS= read -r route; do
+    case "$route" in ""|\#*) continue ;; esac
+    rel="${route#/}"; [ -z "$rel" ] && rel="index.html"
+    [ -f "$DIR/$rel" ] || { bad "declared route has no file: $route"; rmiss=$((rmiss+1)); }
+  done < site/routes.txt
+  [ "$rmiss" -eq 0 ] && pass "all declared routes backed by files"
+else
+  bad "site/routes.txt missing (neutral route manifest is required)"
+fi
+
+# 9. the generated Cloudflare adapter must be present in a packaged artifact.
+# Rendered from site/headers.yaml; if it silently no-ops, the no-cache intent on
+# sw.js never reaches the host and clients pin to stale logic.
+if [ "$DIR" != "." ]; then
+  if [ -s "$DIR/_headers" ] && grep -qE '^/sw\.js$' "$DIR/_headers"; then pass "adapter _headers rendered (sw.js rule present)"
+  else bad "_headers missing or has no /sw.js rule"; fi
+fi
+
+echo
+if [ "$fail" -eq 0 ]; then echo "VERIFY: PASS"; else echo "VERIFY: FAIL ($fail)"; fi
+[ "$fail" -eq 0 ]
