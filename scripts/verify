@@ -50,10 +50,66 @@ fi
 if [ -f "$DIR/sw.js" ] && grep -qE "const CACHE\s*=\s*'lufs-rec-v[0-9]" "$DIR/sw.js"; then pass "sw cache versioned"
 else bad "sw.js missing versioned CACHE const"; fi
 
-# 5. zero external origins (matches site/external-origins.yaml). No network calls, no absolute-root asset refs.
-if grep -nE 'fetch\(|XMLHttpRequest|EventSource|(src|href)="https?:|url\(https?:' "$DIR/index.html" >/dev/null 2>&1; then
-  bad "unexpected external origin/network ref in index.html"; grep -nE 'fetch\(|XMLHttpRequest|EventSource|(src|href)="https?:|url\(https?:' "$DIR/index.html" | head -5
-else pass "zero external origins in index.html"; fi
+# 5. declared-origins gate (site/external-origins.yaml is the single source of truth).
+# Extract every absolute-URL resource reference from index.html, reduce each to its
+# scheme://host origin, and fail on any origin not declared in the YAML list. The
+# declaration is the contract; this check must never carry its own hardcoded list.
+# NB guarded with `if ... then/else` on purpose: under `set -e` a bare failing
+# command aborts the run, which skips every later check and never prints the
+# summary — a verifier that stops early is a verifier that lies about coverage.
+ORIGINS_YAML="$(cd "$(dirname "$0")/.." && pwd)/site/external-origins.yaml"
+if python3 - "$DIR/index.html" "$ORIGINS_YAML" <<'PY'
+import sys, re, os
+
+html_path, yaml_path = sys.argv[1], sys.argv[2]
+html = open(html_path, encoding="utf-8").read()
+
+def to_origin(url):
+    m = re.match(r"(https?://[^/]+)", url)
+    return m.group(1) if m else None
+
+# Declared origins. A missing or empty declaration means nothing is allowed, so an
+# undeclared origin still fails: the gate fails closed, never open.
+declared = set()
+if os.path.exists(yaml_path):
+    for line in open(yaml_path, encoding="utf-8"):
+        m = re.match(r"\s*-\s*(?:url:\s*)?(https?://\S+)", line)
+        if m:
+            o = to_origin(m.group(1).strip("'\""))
+            if o:
+                declared.add(o)
+else:
+    sys.stdout.write("        (no external-origins.yaml found; nothing is declared)\n")
+
+# Resource references only. An <a href> a visitor clicks is not a dependency, but
+# src/href on a fetching element, a srcset candidate, and a CSS url() all are.
+found = set()
+for u in re.findall(r'(?:src|href)=["\x27](https?://[^"\x27\s]+)', html):
+    found.add(to_origin(u))
+for attr in re.findall(r'srcset=["\x27]([^"\x27]+)', html):
+    for cand in attr.split(","):
+        cand = cand.strip().split()[0] if cand.strip() else ""
+        if cand.startswith("http"):
+            found.add(to_origin(cand))
+for u in re.findall(r'url\(\s*["\x27]?(https?://[^)"\x27\s]+)', html):
+    found.add(to_origin(u))
+found.discard(None)
+
+sys.stdout.write("        found: %s\n        declared: %s\n" % (sorted(found) or "[]", sorted(declared) or "[]"))
+undeclared = found - declared
+if undeclared:
+    sys.stdout.write("        undeclared: %s\n" % sorted(undeclared))
+    sys.exit(1)
+PY
+then pass "external-origin resource refs all declared"
+else bad "undeclared external origin in index.html (see found/declared above)"; fi
+
+# Runtime network calls are a separate, unconditional claim: the recorder makes none.
+if grep -nE 'fetch\(|XMLHttpRequest|EventSource' "$DIR/index.html" >/dev/null 2>&1; then
+  bad "runtime network call (fetch/XHR/EventSource) in index.html — the recorder makes none"
+  grep -nE 'fetch\(|XMLHttpRequest|EventSource' "$DIR/index.html" | head -5
+else pass "no runtime network calls (fetch/XHR/EventSource) in index.html"; fi
+
 if grep -nE '(src|href)="/' "$DIR/index.html" >/dev/null 2>&1; then bad "absolute-root asset ref (breaks subpath hosting)"; else pass "all asset refs relative"; fi
 
 # 6. no secret-pattern material shipped

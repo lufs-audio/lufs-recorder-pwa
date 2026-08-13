@@ -3,7 +3,7 @@
  * The recorder itself is fully client-side; the SW only serves static assets.
  * BUMP CACHE on every release so clients pick up new logic (verified by scripts/verify).
  */
-const CACHE = 'lufs-rec-v0.3.2';
+const CACHE = 'lufs-rec-v0.3.3';
 // The canonical shell URL. Deliberately "./" and never "./index.html":
 // hosts commonly 308 the latter to the former, and a redirected response
 // cannot satisfy a navigation.
@@ -59,6 +59,11 @@ async function handleNavigation() {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
+
+  // Cross-origin requests (the analytics beacon) are none of the shell's business:
+  // let the browser own them so nothing third-party lands in the cache and the
+  // offline guarantee stays a statement about OUR bytes.
+  if (!req.url.startsWith(self.location.origin)) return;
 
   if (req.mode === 'navigate') {
     e.respondWith(handleNavigation());

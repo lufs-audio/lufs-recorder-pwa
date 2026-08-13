@@ -43,7 +43,9 @@ routes:
     - /manifest.webmanifest
     - /sw.js
     - /icons/icon.svg
-external_origins: []          # fully self-contained: zero external origins, zero network calls
+external_origins:             # capture, verification, encoding and MIDI still run entirely in-browser;
+  - url: https://umami.lufshq.com/script.js  # user audio never leaves the device. One self-hosted analytics
+    # beacon is the only external origin; see site/external-origins.yaml.
 domains:
   - recorder.lufs.audio         # Cloudflare Pages (production)
   - lufs-recorder-pwa.exe.xyz   # legacy exe.dev host — keep until the Pages cutover has soaked (KB rule 7: retain old infra)

@@ -1,4 +1,13 @@
-# The recorder makes ZERO network calls and depends on ZERO external origins.
-# All capture, verification, encoding, and MIDI synthesis run in-browser.
-# This emptiness is a portability strength and is asserted by scripts/verify.
-external_origins: []
+# The recorder's capture, verification, encoding, and MIDI synthesis all run
+# in-browser — user audio never leaves the device. The analytics beacon below is
+# the only external origin: it is self-hosted (our own box), deferred, and
+# excluded from the service worker cache. The recorder still captures, verifies,
+# and exports with this origin unreachable; no take data ever leaves the device.
+# This list is the single source of truth: scripts/verify reads it and fails on
+# any resource reference in index.html whose origin is not declared here.
+external_origins:
+  - url: https://umami.lufshq.com/script.js
+    note: >-
+      Self-hosted Umami (our own box). Deferred, analytics-only, excluded from the
+      service worker cache — the recorder still captures, verifies and exports with
+      this origin unreachable, and no take data ever leaves the device.
