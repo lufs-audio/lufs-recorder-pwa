@@ -1,1 +1,13 @@
-IyBUaGUgcmVjb3JkZXIncyBjYXB0dXJlLCB2ZXJpZmljYXRpb24sIGVuY29kaW5nLCBhbmQgTUlESSBzeW50aGVzaXMgYWxsIHJ1bgojIGluLWJyb3dzZXIg4oCUIHVzZXIgYXVkaW8gbmV2ZXIgbGVhdmVzIHRoZSBkZXZpY2UuIFRoZSBhbmFseXRpY3MgYmVhY29uIGJlbG93IGlzCiMgdGhlIG9ubHkgZXh0ZXJuYWwgb3JpZ2luOiBpdCBpcyBzZWxmLWhvc3RlZCAob3VyIG93biBib3gpLCBkZWZlcnJlZCwgYW5kCiMgZXhjbHVkZWQgZnJvbSB0aGUgc2VydmljZSB3b3JrZXIgY2FjaGUuIFRoZSByZWNvcmRlciBzdGlsbCBjYXB0dXJlcywgdmVyaWZpZXMsCiMgYW5kIGV4cG9ydHMgd2l0aCB0aGlzIG9yaWdpbiB1bnJlYWNoYWJsZTsgbm8gdGFrZSBkYXRhIGV2ZXIgbGVhdmVzIHRoZSBkZXZpY2UuCiMgVGhpcyBsaXN0IGlzIHRoZSBzaW5nbGUgc291cmNlIG9mIHRydXRoOiBzY3JpcHRzL3ZlcmlmeSByZWFkcyBpdCBhbmQgZmFpbHMgb24KIyBhbnkgcmVzb3VyY2UgcmVmZXJlbmNlIGluIGluZGV4Lmh0bWwgd2hvc2Ugb3JpZ2luIGlzIG5vdCBkZWNsYXJlZCBoZXJlLgpleHRlcm5hbF9vcmlnaW5zOgogIC0gdXJsOiBodHRwczovL3VtYW1pLmx1ZnNocS5jb20vc2NyaXB0LmpzCiAgICBub3RlOiA+LQogICAgICBTZWxmLWhvc3RlZCBVbWFtaSAob3VyIG93biBib3gpLiBEZWZlcnJlZCwgYW5hbHl0aWNzLW9ubHksIGV4Y2x1ZGVkIGZyb20gdGhlCiAgICAgIHNlcnZpY2Ugd29ya2VyIGNhY2hlIOKAlCB0aGUgcmVjb3JkZXIgc3RpbGwgY2FwdHVyZXMsIHZlcmlmaWVzIGFuZCBleHBvcnRzIHdpdGgKICAgICAgdGhpcyBvcmlnaW4gdW5yZWFjaGFibGUsIGFuZCBubyB0YWtlIGRhdGEgZXZlciBsZWF2ZXMgdGhlIGRldmljZS4K
+# The recorder's capture, verification, encoding, and MIDI synthesis all run
+# in-browser — user audio never leaves the device. The analytics beacon below is
+# the only external origin: it is self-hosted (our own box), deferred, and
+# excluded from the service worker cache. The recorder still captures, verifies,
+# and exports with this origin unreachable; no take data ever leaves the device.
+# This list is the single source of truth: scripts/verify reads it and fails on
+# any resource reference in index.html whose origin is not declared here.
+external_origins:
+  - url: https://umami.lufshq.com/script.js
+    note: >-
+      Self-hosted Umami (our own box). Deferred, analytics-only, excluded from the
+      service worker cache — the recorder still captures, verifies and exports with
+      this origin unreachable, and no take data ever leaves the device.
